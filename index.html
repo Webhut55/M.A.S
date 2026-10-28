@@ -1,1912 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAN — WebHut AI Workspace</title>
-  
-  <!-- PWA Configuration -->
-  <link id="manifestLink" rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#1a7a20">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="MAN AI">
-  
-  <!-- Icons -->
-  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMDAiIGZpbGw9IiNmY2ZjZmMiLz48cGF0aCBkPSJNMTIwIDM4MFYxNjBMMjU2IDI4MEwzOTIgMTYwVjM4MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWE3YTIwIiBzdHJva2Utd2lkdGg9IjQwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIxNjAiIHI9IjI1IiBmaWxsPSIjMWE3YTIwIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjgwIiByPSIyNSIgZmlsbD0iIzFhN2EyMCIvPjxjaXJjbGUgY3g9IjM5MiIgY3k9IjE2MCIgcj0iMjUiIGZpbGw9IiMxYTdhMjAiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIzODAiIHI9IjI1IiBmaWxsPSIjMWE3YTIwIi8+PGNpcmNsZSBjeD0iMzkyIiBjeT0iMzgwIiByPSIyNSIgZmlsbD0iIzFhN2EyMCIvPjxsaW5lIHgxPSIxMjAiIHkxPSIyNzAiIHgyPSIzOTIiIHkyPSIyNzAiIHN0cm9rZT0iIzFhN2EyMCIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLW9wYWNpdHk9IjAuMyIgc3Ryb2tlLWRhc2hhcnJheT0iMTAgMTAiLz48bGluZSB4MT0iMjU2IiB5MT0iMjgwIiB4Mj0iMjU2IiB5Mj0iNDIwIiBzdHJva2U9IiMxYTdhMjAiIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1vcGFjaXR5PSIwLjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEwIDEwIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iNDIwIiByPSIxNSIgZmlsbD0iIzFhN2EyMCIgZmlsbC1vcGFjaXR5PSIwLjUiLz48L3N2Zz4=">
-
-  <!-- External CDNs -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
-            mono: ['Fira Code', 'monospace'],
-          },
-          colors: {
-            amber: {
-              400: '#2f9c35', /* Modified to green hues based on original code request */
-              500: '#1a7a20',
-              600: '#145c18',
-              700: '#0f4712',
-            },
-            slate: {
-              50: '#fcfcfc',
-              100: '#f1f5f2',
-              200: '#e2e8e3',
-              300: '#cbd5cd',
-              400: '#94a89b',
-              500: '#64806b',
-              600: '#47654e',
-              700: '#2f4a35', /* Green-tinted text tiers */
-              800: '#1a3620', /* Primary readable text, now green */
-              900: '#0f2313',
-              950: '#081409',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    body {
-      background-color: #fcfcfc;
-      color: #1a3620;
-    }
-    
-    /* Cyber Grid Background */
-    .cyber-grid {
-      background-size: 30px 30px;
-      background-image: 
-        linear-gradient(to right, rgba(26, 122, 32, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(26, 122, 32, 0.04) 1px, transparent 1px);
-    }
-
-    /* Custom scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #fcfcfc;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5cd;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #1a7a20;
-    }
-
-    /* Glassmorphic Panels */
-    .glass-panel {
-      background: rgba(252, 252, 252, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-right: 1px solid rgba(26, 122, 32, 0.1);
-    }
-    .glass-header {
-      background: rgba(252, 252, 252, 0.9);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    /* Entrance animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.97); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.85) translateY(8px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    /* Desktop sidebar collapse */
-    #sidebar {
-      transition: width 280ms cubic-bezier(0.4, 0, 0.2, 1), margin-left 280ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease, transform 280ms ease-in-out;
-    }
-    @media (min-width: 1024px) {
-      #sidebar.lg-collapsed {
-        width: 0 !important;
-        min-width: 0 !important;
-        opacity: 0;
-        pointer-events: none;
-        border-right: none;
-        overflow: hidden;
-      }
-    }
-    #sidebarToggleDesktop svg {
-      transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #sidebarToggleDesktop.is-collapsed svg {
-      transform: rotate(180deg);
-    }
-
-    /* Scroll-to-bottom FAB */
-    #scrollToBottomBtn {
-      transition: opacity 220ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    #scrollToBottomBtn.is-visible {
-      opacity: 1 !important;
-      transform: translateX(-50%) scale(1) !important;
-      pointer-events: auto !important;
-    }
-
-    /* Voice Mode face */
-    #voiceMouth {
-      transition: d 90ms ease-in-out;
-    }
-    #voiceEyeL, #voiceEyeR {
-      transition: r 150ms ease, opacity 150ms ease;
-      transform-origin: center;
-    }
-    @keyframes voiceRingPulse {
-      0% { transform: scale(0.95); opacity: 0.6; }
-      70% { transform: scale(1.25); opacity: 0; }
-      100% { transform: scale(1.25); opacity: 0; }
-    }
-    @keyframes voiceBlink {
-      0%, 90%, 100% { transform: scaleY(1); }
-      95% { transform: scaleY(0.1); }
-    }
-    .voice-listening #voiceRing {
-      animation: voiceRingPulse 1.6s ease-out infinite;
-    }
-    .voice-listening #voiceRing2 {
-      animation: voiceRingPulse 1.6s ease-out infinite 0.5s;
-    }
-    .voice-idle #voiceEyeL, .voice-idle #voiceEyeR {
-      animation: voiceBlink 4.5s ease-in-out infinite;
-    }
-    .voice-thinking #voiceMouth {
-      animation: none;
-    }
-
-    /* EMO-style extra properties: bobbing head, thinking tilt, blush, sleepy droop */
-    #voiceFace {
-      transition: transform 300ms ease-in-out;
-      transform-origin: 50% 60%;
-    }
-    .voice-cheek {
-      transition: opacity 300ms ease;
-    }
-    @keyframes voiceBob {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-3px) rotate(0deg); }
-    }
-    .voice-listening #voiceFace {
-      animation: voiceBob 1.1s ease-in-out infinite;
-    }
-    @keyframes voiceThinkTilt {
-      0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(6deg); }
-    }
-    .voice-thinking #voiceFace {
-      animation: voiceThinkTilt 1.3s ease-in-out infinite;
-    }
-    @keyframes voiceEyeSparkle {
-      0%, 100% { opacity: 1; r: 11; }
-      50% { opacity: 0.7; r: 9; }
-    }
-    .voice-speaking #voiceEyeL, .voice-speaking #voiceEyeR {
-      animation: voiceEyeSparkle 0.5s ease-in-out infinite;
-    }
-
-    /* Mood: happy */
-    .voice-mood-happy #voiceMouth { d: path("M 86 120 Q 100 136 114 120"); }
-    .voice-mood-happy .voice-cheek { opacity: 0.8; }
-    .voice-mood-happy #voiceEyeL, .voice-mood-happy #voiceEyeR { fill: #4ade80; }
-
-    /* Mood: curious */
-    .voice-mood-curious #voiceFace { transform: rotate(-8deg); }
-    .voice-mood-curious #voiceEyeR { transform: translateY(-4px); }
-    .voice-mood-curious #voiceMouth { d: path("M 90 124 Q 100 120 110 126"); }
-
-    /* Mood: sleepy */
-    .voice-mood-sleepy #voiceEyeL, .voice-mood-sleepy #voiceEyeR { transform: scaleY(0.25); fill: #94a3b8; }
-    .voice-mood-sleepy #voiceMouth { d: path("M 92 124 Q 100 122 108 124"); }
-    .voice-mood-sleepy #voiceFace { animation: voiceBob 3s ease-in-out infinite; }
-
-    /* Markdown Styling */
-    .markdown-content p {
-      margin-bottom: 0.85rem;
-      line-height: 1.625;
-    }
-    .markdown-content p:last-child {
-      margin-bottom: 0;
-    }
-    .markdown-content ul {
-      list-style-type: disc;
-      padding-left: 1.25rem;
-      margin-bottom: 0.85rem;
-    }
-    .markdown-content ol {
-      list-style-type: decimal;
-      padding-left: 1.25rem;
-      margin-bottom: 0.85rem;
-    }
-    .markdown-content li {
-      margin-bottom: 0.25rem;
-    }
-    .markdown-content h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin: 1.25rem 0 0.5rem 0;
-      color: #1a7a20;
-    }
-    .markdown-content h2 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 1.1rem 0 0.5rem 0;
-      color: #1a7a20;
-    }
-    .markdown-content h3 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin: 0.9rem 0 0.4rem 0;
-      color: #1a7a20;
-    }
-    .markdown-content code {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.85rem;
-      background-color: rgba(226, 232, 240, 0.6);
-      padding: 0.125rem 0.3rem;
-      border-radius: 0.25rem;
-      color: #0f5c14;
-      border: 1px solid rgba(26, 122, 32, 0.15);
-    }
-    .markdown-content pre code {
-      background-color: transparent;
-      padding: 0;
-      color: inherit;
-      border: none;
-    }
-    .markdown-content blockquote {
-      border-left: 3px solid #1a7a20;
-      padding-left: 1rem;
-      color: #64806b;
-      font-style: italic;
-      margin: 1rem 0;
-      background: rgba(26, 122, 32, 0.02);
-      padding-top: 0.25rem;
-      padding-bottom: 0.25rem;
-    }
-    .markdown-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-      font-size: 0.9rem;
-    }
-    .markdown-content th, .markdown-content td {
-      border: 1px solid rgba(26, 122, 32, 0.15);
-      padding: 0.5rem 0.75rem;
-      text-align: left;
-    }
-    .markdown-content th {
-      background-color: rgba(26, 122, 32, 0.05);
-      color: #1a7a20;
-      font-weight: 600;
-    }
-    .markdown-content a {
-      color: #1a7a20;
-      text-decoration: underline;
-      transition: color 0.2s;
-    }
-    .markdown-content a:hover {
-      color: #145c18;
-    }
-
-    /* Override input placeholder colors for better contrast */
-    ::placeholder {
-      color: #94a89b !important;
-      opacity: 1; 
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MAS — WebHut Multi-Agent System</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0b2016">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MAS">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230b2016'/%3E%3Cpath d='M120 380V160L256 280L392 160V380' fill='none' stroke='%23fff' stroke-width='40' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='120' cy='160' r='28' fill='%237fd38a'/%3E%3Ccircle cx='256' cy='280' r='28' fill='%237fd38a'/%3E%3Ccircle cx='392' cy='160' r='28' fill='%237fd38a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<style>
+:root{--ink:#0b2016;--forest:#123b22;--leaf:#1a7a20;--lime:#7fd38a;--paper:#f2f5f0;--line:#dbe4d9;--mute:#5d7565;--warn:#b0621a;--bad:#a63a2b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:15px/1.6 'Instrument Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);display:flex}
+h1,h2,h3,.disp{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.025em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--leaf);outline-offset:2px}
+nav{width:236px;flex:none;background:var(--ink);color:#b9d1bf;display:flex;flex-direction:column;padding:22px 14px;gap:4px}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px 22px}
+.brand svg{width:36px;height:36px}
+.brand b{display:block;color:#fff;font:800 20px 'Bricolage Grotesque';letter-spacing:-.02em;line-height:1.1}
+.brand span{font-size:12px;color:#7da38a}
+nav button.t{display:flex;align-items:center;gap:11px;background:none;border:0;color:inherit;padding:10px 12px;border-radius:10px;text-align:left;font-weight:500}
+nav button.t:hover{background:#ffffff0d}
+nav button.t.on{background:var(--forest);color:#fff;box-shadow:inset 3px 0 0 var(--lime)}
+nav svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav .sp{flex:1}
+main{flex:1;min-width:0;overflow:auto;padding:34px clamp(18px,4vw,52px) 60px}
+.view{display:none;max-width:980px;margin:0 auto}
+.view.on{display:block}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:26px}
+.head h1{font-size:clamp(28px,4vw,42px);line-height:1.05;font-weight:800}
+.head p{color:var(--mute);margin-top:6px}
+.btn{background:var(--leaf);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:600;transition:background .15s}
+.btn:hover{background:#146018}
+.btn:disabled{opacity:.55;cursor:wait}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:#eaf1e8}
+select,input[type=text],input[type=password],textarea{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+select.sm{width:auto;padding:9px 12px}
+#st{font-size:13px;color:var(--mute);margin-bottom:18px;min-height:20px}
+.rep{display:grid;grid-template-columns:250px 1fr;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:22px}
+.rep aside{background:var(--forest);color:#d4e6d8;padding:24px 22px}
+.rep aside h2{color:#fff;font-size:20px;font-weight:700;word-break:break-all;line-height:1.2}
+.rep aside small{display:block;color:#86ad92;margin:4px 0 22px;font-size:12px}
+.m{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin-bottom:13px;font-size:13px}
+.m span{text-transform:capitalize}
+.m em{font:700 15px 'Bricolage Grotesque';font-style:normal;color:#fff;text-align:right}
+.m small{font:600 11px 'Instrument Sans';margin-left:5px}
+.up{color:var(--lime)}.dn{color:#f0a287}
+.m i{grid-column:1/3;display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.m b{height:6px;border-radius:2px;background:#ffffff1c}
+.m b.on{background:var(--lime)}
+.body{padding:26px 30px;min-width:0}
+.md h2{font-size:19px;margin:22px 0 8px;font-weight:700}
+.md h2:first-child{margin-top:0}
+.md h3{font-size:16px;margin:16px 0 6px}
+.md p{margin:8px 0}
+.md ul,.md ol{margin:8px 0 8px 22px}
+.md li{margin:4px 0}
+.md strong{font-weight:600}
+.md a{color:var(--leaf)}
+.md code{background:#eaf1e8;border-radius:5px;padding:1px 5px;font-size:.9em}
+.md pre{background:var(--ink);color:#d4e6d8;border-radius:10px;padding:12px;overflow:auto;margin:10px 0}
+.md pre code{background:none;padding:0}
+.md table{border-collapse:collapse;margin:10px 0;display:block;overflow:auto}
+.md td,.md th{border:1px solid var(--line);padding:6px 10px;text-align:left}
+.err{color:var(--bad)}
+.empty{border:1px dashed #b8c9b9;border-radius:18px;padding:44px 24px;text-align:center;color:var(--mute)}
+.empty h2{color:var(--ink);font-size:22px;margin-bottom:6px}
+.add{display:flex;gap:10px;margin-bottom:20px}
+.pr{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px}
+.pr div{flex:1;min-width:0}
+.pr b{display:block;font:700 17px 'Bricolage Grotesque'}
+.pr span{font-size:13px;color:var(--mute);word-break:break-all}
+.pr button{background:none;border:0;color:var(--bad);font-weight:500;padding:6px 8px}
+#chat{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
+.msg{max-width:86%;padding:12px 16px;border-radius:16px}
+.msg.u{align-self:flex-end;background:var(--forest);color:#fff;border-bottom-right-radius:4px;white-space:pre-wrap}
+.msg.a{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chips button{background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:500}
+.chips button:hover{border-color:var(--leaf);color:var(--leaf)}
+.compose{display:flex;gap:10px;align-items:flex-end;position:sticky;bottom:0;background:var(--paper);padding-top:8px}
+.compose textarea{resize:none;max-height:150px}
+dialog{border:0;border-radius:18px;padding:26px;width:min(440px,92vw);margin:auto;box-shadow:0 24px 70px #0b201655}
+dialog::backdrop{background:#0b2016aa}
+dialog label{display:block;font-weight:600;margin:14px 0 6px}
+dialog p.h{font-size:13px;color:var(--mute);margin-top:6px}
+.row{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+@media(max-width:820px){
+body{flex-direction:column-reverse}
+nav{width:100%;flex-direction:row;padding:6px 8px calc(6px + env(safe-area-inset-bottom));gap:2px;justify-content:space-around}
+.brand,nav .sp{display:none}
+nav button.t{flex-direction:column;gap:2px;font-size:11px;padding:7px 10px}
+nav button.t.on{box-shadow:none}
+main{padding-top:calc(24px + env(safe-area-inset-top))}
+.rep{grid-template-columns:1fr}
+.body{padding:20px}
+.msg{max-width:94%}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
-<body class="font-sans antialiased h-screen overflow-hidden flex flex-col cyber-grid">
+<body>
+<nav>
+  <div class="brand"><svg viewBox="0 0 512 512"><rect width="512" height="512" rx="110" fill="#123b22"/><path d="M120 380V160L256 280L392 160V380" fill="none" stroke="#fff" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/><circle cx="120" cy="160" r="28" fill="#7fd38a"/><circle cx="256" cy="280" r="28" fill="#7fd38a"/><circle cx="392" cy="160" r="28" fill="#7fd38a"/></svg><div><b>MAS</b><span>WebHut Multi-Agent System</span></div></div>
+  <button class="t on" data-v="reports"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Reports</button>
+  <button class="t" data-v="projects"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>Projects</button>
+  <button class="t" data-v="ideas"><svg class="i" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>Ideas</button>
+  <div class="sp"></div>
+  <button class="t" id="cfg"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+</nav>
 
-  <!-- Mobile Sidebar Overlay -->
-  <div id="sidebarOverlay" class="fixed inset-0 bg-slate-100/80 backdrop-blur-sm z-30 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMobileSidebar()"></div>
-
-  <!-- Main Container -->
-  <div class="flex h-full w-full relative overflow-hidden animate-[fadeInScale_0.45s_cubic-bezier(0.16,1,0.3,1)]">
-    
-    <!-- Sidebar -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-80 transform -translate-x-full transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 flex flex-col h-full glass-panel">
-      <!-- Sidebar Brand Header -->
-      <div class="p-6 border-b border-slate-200 flex items-center justify-between bg-white/50 animate-[fadeIn_0.35s_ease-out]" style="animation-fill-mode: backwards; animation-delay: 0.03s;">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shadow-[0_0_15px_rgba(26,122,32,0.1)]">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-amber-500">
-              <path d="M120 380V160L256 280L392 160V380M120 160C120 146.19 131.19 135 145 135C158.81 135 170 146.19 170 160C170 173.81 158.81 185 145 185C131.19 185 120 173.81 120 160ZM392 160C392 146.19 403.19 135 417 135C430.81 135 442 146.19 442 160C442 173.81 430.81 185 417 185C403.19 185 392 173.81 392 160Z" stroke="#1a7a20" stroke-width="25" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </div>
-          <div>
-            <h1 class="text-xl font-bold tracking-tight text-amber-600 font-mono">MAN</h1>
-            <p class="text-[9px] text-slate-500 font-mono tracking-widest uppercase font-semibold">Automated Networks</p>
-          </div>
-        </div>
-        <!-- Close Sidebar on Mobile -->
-        <button onclick="toggleMobileSidebar()" class="lg:hidden p-1.5 rounded-md hover:bg-slate-200 border border-transparent text-slate-500 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- New Chat + History -->
-      <div class="p-4 pb-2 border-b border-slate-200 bg-white/40 space-y-3 animate-[fadeIn_0.35s_ease-out]" style="animation-fill-mode: backwards; animation-delay: 0.08s;">
-        <button onclick="startNewChat()" class="flex items-center justify-center gap-2 w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm py-2.5 px-3 rounded-lg transition-all shadow-sm active:scale-[0.98]">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-          </svg>
-          New Chat
-        </button>
-
-        <div class="space-y-1.5">
-          <div class="flex items-center justify-between px-1">
-            <label class="text-xs font-mono font-semibold tracking-wider text-slate-600 uppercase">Chat History</label>
-            <span id="historyCountBadge" class="text-[10px] font-mono text-slate-400">0</span>
-          </div>
-          <div id="chatHistoryList" class="space-y-1 max-h-48 overflow-y-auto pr-1">
-            <!-- Populated by renderChatHistoryList() -->
-            <p id="emptyHistoryMsg" class="text-[11px] text-slate-400 font-mono px-2 py-3 text-center">No saved chats yet.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar Content (Scrollable) -->
-      <div class="flex-1 overflow-y-auto p-5 space-y-6 animate-[fadeIn_0.35s_ease-out]" style="animation-fill-mode: backwards; animation-delay: 0.13s;">
-        
-        <!-- API KEY SETTING -->
-        <div class="space-y-2 bg-white/60 p-4 rounded-xl border border-slate-200/60 shadow-sm">
-          <div class="flex items-center justify-between">
-            <label class="text-xs font-mono font-semibold tracking-wider text-slate-600 uppercase">OpenRouter API Key</label>
-            <span id="keyStatusBadge" class="flex items-center gap-1 text-[10px] font-mono text-rose-600 font-medium">
-              <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> Offline
-            </span>
-          </div>
-          <div class="relative">
-            <input type="password" id="apiKeyInput" placeholder="sk-or-v1-..." 
-              class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 pr-10 font-mono transition-all">
-            <button id="toggleKeyVisibility" class="absolute inset-y-0 right-0 px-3 flex items-center text-slate-400 hover:text-slate-600 active:scale-90 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-            </button>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="saveApiKey()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs py-2 px-3 rounded-lg transition-all shadow-sm active:scale-[0.98]">Save Key</button>
-            <button onclick="clearApiKey()" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-600 text-xs py-2 px-3 rounded-lg transition-all active:scale-[0.98]">Clear</button>
-          </div>
-          <p class="text-[10px] text-slate-500 leading-normal font-mono">
-            Key is stored locally. Get free keys at <a href="https://openrouter.ai/keys" target="_blank" class="text-amber-600 hover:text-amber-700 underline font-medium">openrouter.ai/keys</a>.
-          </p>
-        </div>
-
-        <!-- MODEL SELECTOR -->
-        <div class="space-y-2.5">
-          <label class="text-xs font-mono font-semibold tracking-wider text-slate-600 uppercase">Network Intelligence</label>
-          <select id="modelSelect" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm text-slate-800 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 font-mono transition-all cursor-pointer shadow-sm">
-            <option value="openrouter/free">MAN Auto (Free Models Router)</option>
-            <option value="google/gemma-3-12b-it:free">MAN General (Gemma 3 12B)</option>
-            <option value="meta-llama/llama-3.3-70b-instruct:free">MAN Assistant (Llama 3.3 70B)</option>
-            <option value="openai/gpt-oss-20b:free">MAN Coder (GPT-OSS 20B)</option>
-          </select>
-        </div>
-
-        <!-- CONFIGURATION / SYSTEM PROMPT -->
-        <div class="space-y-2">
-          <label class="text-xs font-mono font-semibold tracking-wider text-slate-600 uppercase">System Directives</label>
-          <textarea id="systemPromptInput" rows="3" placeholder="You are MAN..." 
-            class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs text-slate-700 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 font-mono leading-relaxed transition-all shadow-sm resize-y">You are MAN (Module for Automated Networks), a high-tier cybernetic assistant designed by WebHut. Provide detailed, optimized, clean, and highly precise technical architectures, scripts, and software solutions. Format code blocks carefully.</textarea>
-        </div>
-
-        <!-- API INTEGRATION -->
-        <div class="space-y-2 border-t border-slate-200 pt-4">
-          <button onclick="toggleSidebarAccordion(this)" class="flex items-center justify-between w-full text-xs font-mono font-semibold tracking-wider text-slate-500 uppercase hover:text-amber-600 transition-colors p-2 rounded-lg hover:bg-slate-100">
-            <span>API Code Snippet</span>
-            <svg class="arrow-icon w-3.5 h-3.5 transition-transform duration-200 transform -rotate-90 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-            </svg>
-          </button>
-          <div class="hidden space-y-2 mt-1 px-2">
-            <p class="text-[10px] text-slate-500 leading-normal font-mono">
-              Integrate the WebHut MAN module in external scripts:
-            </p>
-            <pre class="bg-slate-800 p-3 rounded-lg border border-slate-700 text-[10px] font-mono text-amber-400 overflow-x-auto leading-relaxed max-h-48 shadow-inner"><code>// Example fetch to OpenRouter
-const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-  method: 'POST',
-  headers: {
-    'Authorization': `Bearer \${apiKey}`,
-    'Content-Type': 'application/json',
-    'HTTP-Referer': 'https://webhut.dev',
-    'X-Title': 'WebHut MAN'
-  },
-  body: JSON.stringify({
-    model: 'openrouter/free',
-    messages: [
-      { role: 'system', content: 'You are MAN...' },
-      { role: 'user', content: 'Hello' }
-    ]
-  })
-});</code></pre>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Sidebar Footer -->
-      <div class="p-4 border-t border-slate-200 bg-slate-50 flex flex-col gap-2 animate-[fadeIn_0.35s_ease-out]" style="animation-fill-mode: backwards; animation-delay: 0.18s;">
-        <div class="grid grid-cols-2 gap-2">
-          <button onclick="exportCurrentChat()" class="flex items-center justify-center gap-1.5 w-full bg-white hover:bg-amber-50 border border-slate-300 hover:border-amber-300 text-slate-600 hover:text-amber-700 font-medium text-xs py-2 px-3 rounded-lg transition-all active:scale-[0.98] shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
-            </svg>
-            Export
-          </button>
-          <button onclick="clearChatHistory()" class="flex items-center justify-center gap-1.5 w-full bg-white hover:bg-rose-50 border border-slate-300 hover:border-rose-200 text-slate-600 hover:text-rose-600 font-medium text-xs py-2 px-3 rounded-lg transition-all active:scale-[0.98] shadow-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-            </svg>
-            Clear All
-          </button>
-        </div>
-        <div class="text-[10px] text-center text-slate-400 font-mono mt-1">
-          WebHut MAN Workspace v1.3.0
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main Chat Pane -->
-    <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-transparent">
-      
-      <!-- Top Navigation Header -->
-      <header class="h-16 border-b border-slate-200/80 flex items-center justify-between px-4 md:px-6 glass-header z-20 shrink-0 shadow-sm animate-[fadeIn_0.4s_ease-out]" style="animation-fill-mode: backwards; animation-delay: 0.05s;">
-        <!-- Sidebar Toggle Button (Mobile) -->
-        <div class="flex items-center gap-3">
-          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-100 border border-slate-200 text-slate-600 active:scale-90 transition-all">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-          </button>
-
-          <!-- Sidebar Toggle Button (Desktop) -->
-          <button id="sidebarToggleDesktop" onclick="toggleDesktopSidebar()" title="Toggle sidebar (Ctrl+B)" class="hidden lg:flex p-2 rounded-lg hover:bg-slate-100 border border-slate-200 text-slate-600 transition-colors active:scale-95">
-            <svg class="w-4.5 h-4.5" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <rect x="3" y="4" width="18" height="16" rx="2"/>
-              <line x1="9" y1="4" x2="9" y2="20"/>
-            </svg>
-          </button>
-          
-          <div class="flex items-center gap-2 lg:hidden">
-            <span class="text-lg font-bold text-amber-600 font-mono tracking-tight">MAN</span>
-          </div>
-          
-          <span class="hidden lg:inline-flex items-center gap-2 text-xs font-mono text-slate-600 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(26,122,32,0.6)]"></span>
-            Active Model: <span id="headerModelBadge" class="text-amber-700 font-semibold">MAN Auto</span>
-          </span>
-        </div>
-
-        <!-- Actions / In-App PWA Install Banner -->
-        <div class="flex items-center gap-3">
-          <!-- Voice Mode Toggle -->
-          <button id="voiceModeBtn" onclick="openVoiceMode()" title="Voice Mode" class="flex items-center gap-1.5 bg-white hover:bg-amber-50 border border-slate-300 hover:border-amber-400 text-slate-600 hover:text-amber-700 font-bold text-xs py-1.5 px-3 rounded-lg active:scale-95 transition-all shadow-sm">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/>
-            </svg>
-            <span class="hidden sm:inline">Voice</span>
-          </button>
-
-          <!-- Install Button (Hidden by default, shown by beforeinstallprompt) -->
-          <button id="installBtn" class="hidden items-center gap-1.5 bg-white border border-amber-500/50 hover:bg-amber-50 text-amber-700 font-bold text-xs py-1.5 px-3 rounded-lg active:scale-95 transition-all shadow-sm animate-[fadeInScale_0.3s_ease-out]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            Install
-          </button>
-
-          <!-- API Indicator Badge -->
-          <div id="headerStatusBadge" class="text-xs bg-white border border-slate-200 px-3 py-1.5 rounded-full flex items-center gap-2 font-mono text-slate-500 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-            No Key
-          </div>
-        </div>
-      </header>
-      <!-- Chat History Area -->
-      <div id="chatHistory" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 w-full mx-auto pb-8">
-        <!-- Zero State Welcome View -->
-        <div id="zeroState" class="flex flex-col items-center justify-center min-h-[65vh] text-center max-w-2xl mx-auto space-y-8 py-8 animate-[fadeIn_0.5s_ease-out]">
-          <div class="relative">
-            <div class="absolute inset-0 rounded-full bg-amber-500/20 blur-2xl w-28 h-28 mx-auto animate-pulse"></div>
-            <div class="relative w-24 h-24 rounded-2xl bg-white border border-amber-500/30 flex items-center justify-center shadow-lg mx-auto">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-14 h-14 fill-amber-600">
-                <path d="M120 380V160L256 280L392 160V380M120 160C120 146.19 131.19 135 145 135C158.81 135 170 146.19 170 160C170 173.81 158.81 185 145 185C131.19 185 120 173.81 120 160ZM392 160C392 146.19 403.19 135 417 135C430.81 135 442 146.19 442 160C442 173.81 430.81 185 417 185C403.19 185 392 173.81 392 160Z" stroke="#1a7a20" stroke-width="25" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              </svg>
-            </div>
-          </div>
-
-          <div class="space-y-3 px-4">
-            <h2 class="text-3xl font-extrabold tracking-tight text-slate-800 md:text-4xl font-mono">
-              WebHut's <span class="text-amber-600">MAN</span> Workspace
-            </h2>
-            <p class="text-sm text-slate-500 max-w-lg mx-auto leading-relaxed">
-              Secure in-browser console connected to high-performance neural networks. Enter your OpenRouter key to begin automation tasks. All data remains in your local cache.
-            </p>
-          </div>
-
-          <!-- Suggested prompts card grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full pt-6 px-4">
-            <button onclick="applySuggestedPrompt('Design a secure virtual private network topology for a company with 3 branch offices. Output as a detailed markdown report.')" 
-              class="text-left p-4 rounded-xl border border-slate-200 bg-white/70 hover:bg-white hover:border-amber-400 hover:shadow-md transition-all text-sm text-slate-700 space-y-1.5 group">
-              <div class="font-bold text-amber-700 font-mono group-hover:text-amber-600 transition-colors">Network Design</div>
-              <p class="text-slate-500 leading-normal text-xs">Design a secure VPN topology for 3 branch offices.</p>
-            </button>
-
-            <button onclick="applySuggestedPrompt('Write an optimized bash script to monitor CPU usage and alert if it exceeds 90% for 5 minutes. Include comments.')" 
-              class="text-left p-4 rounded-xl border border-slate-200 bg-white/70 hover:bg-white hover:border-amber-400 hover:shadow-md transition-all text-sm text-slate-700 space-y-1.5 group">
-              <div class="font-bold text-amber-700 font-mono group-hover:text-amber-600 transition-colors">Automation Script</div>
-              <p class="text-slate-500 leading-normal text-xs">Monitor server CPU usage and alert via bash script.</p>
-            </button>
-
-            <button onclick="applySuggestedPrompt('Explain the differences between Llama 3 and Gemma models for coding tasks. Use a comparison table.')" 
-              class="text-left p-4 rounded-xl border border-slate-200 bg-white/70 hover:bg-white hover:border-amber-400 hover:shadow-md transition-all text-sm text-slate-700 space-y-1.5 group">
-              <div class="font-bold text-amber-700 font-mono group-hover:text-amber-600 transition-colors">AI Deep Dive</div>
-              <p class="text-slate-500 leading-normal text-xs">Compare Llama and Gemma architectures for coding.</p>
-            </button>
-
-            <button onclick="applySuggestedPrompt('Create a simple, aesthetic HTML/Tailwind login page for a cyber security dashboard in a single file.')" 
-              class="text-left p-4 rounded-xl border border-slate-200 bg-white/70 hover:bg-white hover:border-amber-400 hover:shadow-md transition-all text-sm text-slate-700 space-y-1.5 group">
-              <div class="font-bold text-amber-700 font-mono group-hover:text-amber-600 transition-colors">Frontend Mockup</div>
-              <p class="text-slate-500 leading-normal text-xs">Generate a live cyber defense terminal login page.</p>
-            </button>
-
-            <button onclick="applySuggestedPrompt('Draft a client-ready project proposal for WebHut for a 5-page small business website, including scope, timeline, and pricing tiers.')" 
-              class="text-left p-4 rounded-xl border border-slate-200 bg-white/70 hover:bg-white hover:border-amber-400 hover:shadow-md transition-all text-sm text-slate-700 space-y-1.5 group">
-              <div class="font-bold text-amber-700 font-mono group-hover:text-amber-600 transition-colors">Client Proposal</div>
-              <p class="text-slate-500 leading-normal text-xs">Draft a WebHut project proposal with scope and pricing.</p>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scroll to Bottom FAB -->
-      <button id="scrollToBottomBtn" onclick="scrollToBottom()" class="flex absolute bottom-28 left-1/2 z-20 items-center gap-1.5 bg-white hover:bg-amber-50 border border-slate-300 hover:border-amber-400 text-slate-600 hover:text-amber-700 text-xs font-semibold py-1.5 px-3.5 rounded-full shadow-lg opacity-0 scale-90 pointer-events-none" style="transform: translateX(-50%) scale(0.9);">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-        </svg>
-        Scroll to latest
-      </button>
-
-      <!-- Bottom Chat Inputs -->
-      <footer class="p-4 bg-white/80 backdrop-blur-md border-t border-slate-200 shrink-0 z-20 pb-6 animate-[fadeIn_0.4s_ease-out]" style="animation-fill-mode: backwards; animation-delay: 0.15s;">
-        <div class="max-w-4xl mx-auto space-y-2">
-          
-          <div class="relative flex items-end gap-3 bg-white border border-slate-300 rounded-2xl px-4 py-3 focus-within:border-amber-500 focus-within:ring-2 focus-within:ring-amber-500/20 transition-all shadow-sm">
-            
-            <textarea id="userInput" rows="1" placeholder="Instruct MAN workspace... (Shift+Enter for new line)" 
-              class="flex-1 bg-transparent border-0 focus:outline-none focus:ring-0 text-sm text-slate-800 placeholder-slate-400 resize-none font-sans max-h-48 py-1 h-7 my-auto"
-              onkeydown="handleTextareaKeydown(event)"></textarea>
-
-            <!-- Actions container -->
-            <div class="flex items-center gap-2 shrink-0 h-full pb-1">
-              <!-- Stop Stream Button -->
-              <button id="stopBtn" onclick="stopGenerating()" class="hidden items-center justify-center p-2 rounded-xl bg-rose-100 text-rose-600 hover:bg-rose-200 hover:text-rose-700 active:scale-90 transition-all" title="Stop generating">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <rect x="6" y="6" width="12" height="12" rx="2"></rect>
-                </svg>
-              </button>
-
-              <!-- Send Button -->
-              <button id="sendBtn" onclick="sendPrompt()" 
-                class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-[0.95] text-white transition-all shadow-md disabled:opacity-50 disabled:pointer-events-none">
-                <svg class="w-4 h-4 stroke-white" fill="none" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
-                </svg>
-              </button>
-            </div>
-
-          </div>
-
-          <div class="flex justify-between items-center text-[10px] text-slate-400 font-mono px-2">
-            <span>Powered by <a href="https://openrouter.ai" target="_blank" class="text-amber-600 hover:underline">OpenRouter</a> API</span>
-            <span class="hidden sm:inline">Secure Local Storage Only</span>
-          </div>
-
-        </div>
-      </footer>
-
-    </main>
-
-  </div>
-
-  <!-- Voice Mode Overlay -->
-  <div id="voiceModeOverlay" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-900/90 backdrop-blur-md p-6">
-    <button onclick="closeVoiceMode()" class="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all active:scale-90">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
-
-    <div class="flex flex-col items-center gap-8 max-w-md w-full text-center">
-
-      <!-- Face -->
-      <div class="relative w-48 h-48">
-        <div id="voiceRing" class="absolute inset-0 rounded-full border-2 border-sky-400/50"></div>
-        <div id="voiceRing2" class="absolute inset-0 rounded-full border-2 border-sky-400/25"></div>
-        <div class="absolute inset-3 rounded-full bg-gradient-to-b from-[#fafcff] to-[#e7edf5] shadow-[0_0_60px_rgba(56,189,248,0.35)] flex items-center justify-center overflow-hidden border border-slate-200">
-          <svg id="voiceFace" viewBox="0 0 200 200" class="w-36 h-36">
-            <defs>
-              <filter id="voiceGlow" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="3" result="blur"/>
-                <feMerge>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="blur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-
-            <!-- Little rounded ears / antenna bumps -->
-            <circle cx="38" cy="70" r="10" fill="#dbe4ee"/>
-            <circle cx="162" cy="70" r="10" fill="#dbe4ee"/>
-
-            <!-- Screen face -->
-            <rect x="45" y="55" width="110" height="90" rx="35" fill="#0b1220"/>
-
-            <!-- Eyes: round friendly dots -->
-            <circle id="voiceEyeL" cx="80" cy="100" r="11" fill="#38bdf8" filter="url(#voiceGlow)"/>
-            <circle id="voiceEyeR" cx="120" cy="100" r="11" fill="#38bdf8" filter="url(#voiceGlow)"/>
-
-            <!-- Mouth: small curved smile line -->
-            <path id="voiceMouth" d="M 88 122 Q 100 130 112 122" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#voiceGlow)"/>
-
-            <!-- Cheek glow blushes, used for the "happy" property -->
-            <circle id="voiceCheekL" class="voice-cheek" cx="58" cy="112" r="7" fill="#fb7185" opacity="0"/>
-            <circle id="voiceCheekR" class="voice-cheek" cx="142" cy="112" r="7" fill="#fb7185" opacity="0"/>
-          </svg>
-        </div>
-      </div>
-
-      <div class="space-y-2">
-        <p id="voiceStatusText" class="text-white font-mono font-semibold tracking-wide text-lg">Tap the mic to talk</p>
-        <p id="voiceTranscriptText" class="text-white/50 text-sm min-h-[1.5rem]"></p>
-      </div>
-
-      <!-- Mood chips: extra "properties" the little face can express -->
-      <div class="flex flex-wrap justify-center gap-2">
-        <button type="button" onclick="setVoiceMood('happy')" class="voice-mood-btn px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-all active:scale-95">😊 Happy</button>
-        <button type="button" onclick="setVoiceMood('curious')" class="voice-mood-btn px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-all active:scale-95">🤔 Curious</button>
-        <button type="button" onclick="setVoiceMood('sleepy')" class="voice-mood-btn px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-all active:scale-95">😴 Sleepy</button>
-        <button type="button" onclick="setVoiceMood('neutral')" class="voice-mood-btn px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-all active:scale-95">↺ Reset</button>
-      </div>
-
-      <!-- Mic Button -->
-      <button id="voiceMicBtn" onclick="toggleVoiceListening()" class="w-16 h-16 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg transition-all active:scale-90">
-        <svg id="voiceMicIcon" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/>
-        </svg>
-      </button>
-
-      <p class="text-white/30 text-[11px] font-mono">Uses your browser's built-in speech recognition &amp; voice — no extra setup.</p>
+<main>
+  <section class="view on" id="v-reports">
+    <div class="head">
+      <div><h1>Daily briefing</h1><p>Every project, re-read each day and scored against the day before.</p></div>
+      <div style="display:flex;gap:10px"><select class="sm" id="dates" aria-label="Report date"></select><button class="btn" id="run">Run analysis now</button></div>
     </div>
-  </div>
-
-  <!-- Toast Notification Container -->
-  <div id="toastContainer" class="fixed bottom-6 right-6 z-[70] flex flex-col gap-2 pointer-events-none"></div>
-
-  <!-- Application Logic -->
-  <script>
-    // State management
-    let messages = [];
-    let isGenerating = false;
-    let abortController = null;
-    let selectedModel = "openrouter/free";
-    let deferredPrompt = null;
-    let currentSessionId = null;
-    const SESSIONS_KEY = 'man_chat_sessions';
-
-    // Dom elements
-    const chatHistoryEl = document.getElementById('chatHistory');
-    const zeroStateEl = document.getElementById('zeroState');
-    const userInputEl = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    const toggleKeyVisibilityBtn = document.getElementById('toggleKeyVisibility');
-    const sidebarEl = document.getElementById('sidebar');
-    const sidebarOverlayEl = document.getElementById('sidebarOverlay');
-    const sidebarToggleDesktopEl = document.getElementById('sidebarToggleDesktop');
-    const scrollToBottomBtnEl = document.getElementById('scrollToBottomBtn');
-    const systemPromptInput = document.getElementById('systemPromptInput');
-    const keyStatusBadge = document.getElementById('keyStatusBadge');
-    const headerStatusBadge = document.getElementById('headerStatusBadge');
-    const headerModelBadge = document.getElementById('headerModelBadge');
-    const modelSelect = document.getElementById('modelSelect');
-    const installBtn = document.getElementById('installBtn');
-    const chatHistoryListEl = document.getElementById('chatHistoryList');
-    const historyCountBadgeEl = document.getElementById('historyCountBadge');
-    const emptyHistoryMsgEl = document.getElementById('emptyHistoryMsg');
-    const voiceModeOverlayEl = document.getElementById('voiceModeOverlay');
-    const voiceStatusTextEl = document.getElementById('voiceStatusText');
-    const voiceTranscriptTextEl = document.getElementById('voiceTranscriptText');
-    const voiceMicBtnEl = document.getElementById('voiceMicBtn');
-    const voiceMouthEl = document.getElementById('voiceMouth');
-    const voiceFaceWrapEl = document.getElementById('voiceModeOverlay');
-
-    // Configure Marked options for beautiful output rendering
-    const renderer = {
-      code(code, infostring, escaped) {
-        const lang = infostring || 'text';
-        const uniqueId = 'code-' + Math.random().toString(36).substring(2, 9);
-        // Basic escaping to prevent HTML injection in code blocks
-        const escapedCode = code
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#039;');
-
-        return `
-          <div class="relative group my-5 rounded-xl overflow-hidden border border-slate-200 bg-slate-50 font-mono shadow-sm">
-            <div class="flex items-center justify-between px-4 py-2 bg-slate-100 border-b border-slate-200 text-xs text-slate-500">
-              <span class="font-semibold text-amber-700">${lang}</span>
-              <button onclick="copyCodeToClipboard('${uniqueId}')" class="flex items-center gap-1.5 hover:text-amber-600 transition-colors px-2 py-1 rounded hover:bg-slate-200">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                <span>Copy Code</span>
-              </button>
-            </div>
-            <pre class="p-4 overflow-x-auto text-xs md:text-sm text-slate-800 leading-relaxed"><code id="${uniqueId}">${escapedCode}</code></pre>
-          </div>
-        `;
-      }
-    };
-    marked.use({ renderer });
-
-    // Register the Service Worker so the app can be installed and work offline
-    function registerServiceWorker() {
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then((reg) => {
-              console.log('[PWA] Service worker registered with scope:', reg.scope);
-            })
-            .catch((err) => {
-              console.error('[PWA] Service worker registration failed:', err);
-            });
-        });
-      } else {
-        console.warn('[PWA] Service workers are not supported in this browser.');
-      }
-    }
-
-    // Initialize application
-    window.addEventListener('DOMContentLoaded', () => {
-
-      registerServiceWorker();
-      applyStoredSidebarState();
-
-      // Load API Key
-      const savedKey = localStorage.getItem('man_openrouter_key');
-      if (savedKey) {
-        apiKeyInput.value = savedKey;
-        updateKeyStatus(true);
-      } else {
-        updateKeyStatus(false);
-      }
-
-      // Load Chat History
-      loadChatHistory();
-
-      // Input Textarea Auto Grow listener
-      userInputEl.addEventListener('input', autoGrowTextarea);
-      // Init height
-      autoGrowTextarea();
-
-      // Model Selector Selection Listener
-      modelSelect.addEventListener('change', (e) => {
-        selectedModel = e.target.value;
-        updateHeaderModelName(selectedModel);
-      });
-      // Initial set
-      selectedModel = modelSelect.value;
-      updateHeaderModelName(selectedModel);
-    });
-
-    // Handle beforeinstallprompt event for PWA Install Button
-    window.addEventListener('beforeinstallprompt', (e) => {
-      console.log('[PWA] beforeinstallprompt event fired');
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.classList.remove('hidden');
-      installBtn.classList.add('flex');
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`[PWA] Install choice outcome: ${outcome}`);
-      deferredPrompt = null;
-      installBtn.classList.add('hidden');
-      installBtn.classList.remove('flex');
-    });
-
-    window.addEventListener('appinstalled', (e) => {
-      console.log('[PWA] MAN app was installed successfully.');
-      installBtn.classList.add('hidden');
-      installBtn.classList.remove('flex');
-      showToast('MAN installed successfully!');
-    });
-
-    // Toggle API Key visibility
-    function toggleKeyVisibility() {
-      if (apiKeyInput.type === 'password') {
-        apiKeyInput.type = 'text';
-        toggleKeyVisibilityBtn.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.025 10.025 0 014.132-5.411m0 0L4 4m1.824 1.824l1.357 1.357M21 21l-6-6m1.11-1.116A9.99 9.99 0 0021 12c-1.274-4.057-5.064-7-9.542-7-1.274 0-2.48.28-3.56.78" />
-          </svg>
-        `;
-      } else {
-        apiKeyInput.type = 'password';
-        toggleKeyVisibilityBtn.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-        `;
-      }
-    }
-
-    // Auto grow textarea as user types
-    function autoGrowTextarea() {
-      userInputEl.style.height = 'auto';
-      let newHeight = userInputEl.scrollHeight;
-      // Cap at ~4 lines (approx 96px) before scrolling
-      if(newHeight > 100) newHeight = 100;
-      userInputEl.style.height = newHeight + 'px';
-    }
-
-    // Update API Key state
-    window.saveApiKey = function() {
-      const val = apiKeyInput.value.trim();
-      if (!val) {
-        showToast('Please enter a valid key!', 'error');
-        return;
-      }
-      localStorage.setItem('man_openrouter_key', val);
-      updateKeyStatus(true);
-      showToast('API Key saved successfully!');
-    };
-
-    window.clearApiKey = function() {
-      apiKeyInput.value = '';
-      localStorage.removeItem('man_openrouter_key');
-      updateKeyStatus(false);
-      showToast('API Key cleared.', 'warning');
-    };
-
-    function updateKeyStatus(hasKey) {
-      if (hasKey) {
-        keyStatusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span> Ready`;
-        keyStatusBadge.className = "flex items-center gap-1.5 text-[10px] font-mono text-emerald-600 font-bold tracking-wide";
-        headerStatusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span> API Ready`;
-        headerStatusBadge.className = "text-xs bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full flex items-center gap-2 font-mono text-emerald-700 shadow-sm";
-      } else {
-        keyStatusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(225,29,72,0.6)]"></span> Offline`;
-        keyStatusBadge.className = "flex items-center gap-1.5 text-[10px] font-mono text-rose-600 font-bold tracking-wide";
-        headerStatusBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500"></span> No Key`;
-        headerStatusBadge.className = "text-xs bg-white border border-slate-200 px-3 py-1.5 rounded-full flex items-center gap-2 font-mono text-slate-500 shadow-sm";
-      }
-    }
-
-    function updateHeaderModelName(modelVal) {
-      let cleanName = "MAN Auto";
-      if (modelVal.includes("gemma")) cleanName = "Gemma 3 12B";
-      if (modelVal.includes("llama")) cleanName = "Llama 3.3 70B";
-      if (modelVal.includes("gpt-oss")) cleanName = "GPT-OSS 20B";
-      headerModelBadge.innerText = cleanName;
-    }
-
-    window.toggleMobileSidebar = function() {
-      sidebarEl.classList.toggle('-translate-x-full');
-      sidebarOverlayEl.classList.toggle('opacity-0');
-      sidebarOverlayEl.classList.toggle('pointer-events-none');
-    };
-
-    window.toggleDesktopSidebar = function() {
-      const collapsed = sidebarEl.classList.toggle('lg-collapsed');
-      sidebarToggleDesktopEl.classList.toggle('is-collapsed', collapsed);
-      localStorage.setItem('man_sidebar_collapsed', collapsed ? '1' : '0');
-    };
-
-    function applyStoredSidebarState() {
-      if (localStorage.getItem('man_sidebar_collapsed') === '1') {
-        sidebarEl.classList.add('lg-collapsed');
-        sidebarToggleDesktopEl.classList.add('is-collapsed');
-      }
-    }
-
-    // Keyboard shortcuts: Ctrl/Cmd+B toggles sidebar, Ctrl/Cmd+Shift+O starts a new chat
-    window.addEventListener('keydown', (e) => {
-      const mod = e.ctrlKey || e.metaKey;
-      if (mod && e.key.toLowerCase() === 'b') {
-        e.preventDefault();
-        if (window.innerWidth >= 1024) {
-          toggleDesktopSidebar();
-        } else {
-          toggleMobileSidebar();
-        }
-      }
-      if (mod && e.shiftKey && e.key.toLowerCase() === 'o') {
-        e.preventDefault();
-        startNewChat();
-      }
-    });
-
-    // ---- Voice Mode ----
-
-    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let voiceRecognition = null;
-    let isVoiceListening = false;
-    let voiceModeActive = false;
-    let mouthFlapInterval = null;
-    const MOUTH_CLOSED = 'M 88 122 Q 100 130 112 122';
-    const MOUTH_OPEN_SHAPES = [
-      'M 86 120 Q 100 140 114 120',
-      'M 87 121 Q 100 134 113 121',
-      'M 85 119 Q 100 144 115 119'
-    ];
-    let currentVoiceMood = 'neutral';
-
-    // Extra EMO-pet property: switchable moods that change eyes/mouth/cheeks/tilt
-    window.setVoiceMood = function(mood) {
-      currentVoiceMood = mood;
-      voiceFaceWrapEl.classList.remove('voice-mood-happy', 'voice-mood-curious', 'voice-mood-sleepy');
-      if (mood !== 'neutral') {
-        voiceFaceWrapEl.classList.add(`voice-mood-${mood}`);
-      }
-      showToast(`Mood set to ${mood}`, 'info');
-    };
-
-    window.openVoiceMode = function() {
-      voiceModeActive = true;
-      voiceModeOverlayEl.classList.remove('hidden');
-      voiceModeOverlayEl.classList.add('flex');
-      setVoiceState('idle');
-      if (!SpeechRecognitionAPI) {
-        voiceStatusTextEl.innerText = "Voice input isn't supported in this browser";
-        voiceTranscriptTextEl.innerText = 'You can still listen to replies — typed messages work as usual.';
-      }
-    };
-
-    window.closeVoiceMode = function() {
-      voiceModeActive = false;
-      voiceModeOverlayEl.classList.add('hidden');
-      voiceModeOverlayEl.classList.remove('flex');
-      if (voiceRecognition && isVoiceListening) voiceRecognition.stop();
-      window.speechSynthesis.cancel();
-      stopMouthFlap();
-    };
-
-    function setVoiceState(state) {
-      voiceFaceWrapEl.classList.remove('voice-idle', 'voice-listening', 'voice-thinking', 'voice-speaking');
-      voiceFaceWrapEl.classList.add(`voice-${state}`);
-      voiceMicBtnEl.classList.remove('bg-rose-500', 'hover:bg-rose-600');
-      voiceMicBtnEl.classList.add('bg-red-600', 'hover:bg-red-700');
-      if (state === 'idle') {
-        voiceStatusTextEl.innerText = 'Tap the mic to talk';
-        voiceMouthEl.setAttribute('d', MOUTH_CLOSED);
-      } else if (state === 'listening') {
-        voiceStatusTextEl.innerText = 'Listening...';
-        voiceMicBtnEl.classList.remove('bg-red-600', 'hover:bg-red-700');
-        voiceMicBtnEl.classList.add('bg-rose-500', 'hover:bg-rose-600');
-      } else if (state === 'thinking') {
-        voiceStatusTextEl.innerText = 'Thinking...';
-        voiceMouthEl.setAttribute('d', MOUTH_CLOSED);
-      } else if (state === 'speaking') {
-        voiceStatusTextEl.innerText = 'Speaking...';
-      }
-    }
-
-    window.toggleVoiceListening = function() {
-      if (!SpeechRecognitionAPI) {
-        showToast("This browser doesn't support voice input.", 'error');
-        return;
-      }
-      if (isVoiceListening) {
-        voiceRecognition.stop();
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-      stopMouthFlap();
-
-      voiceRecognition = new SpeechRecognitionAPI();
-      voiceRecognition.lang = 'en-US';
-      voiceRecognition.continuous = false;
-      voiceRecognition.interimResults = true;
-
-      voiceRecognition.onstart = () => {
-        isVoiceListening = true;
-        setVoiceState('listening');
-        voiceTranscriptTextEl.innerText = '';
-      };
-
-      voiceRecognition.onresult = (event) => {
-        let transcript = '';
-        for (let i = 0; i < event.results.length; i++) {
-          transcript += event.results[i][0].transcript;
-        }
-        voiceTranscriptTextEl.innerText = transcript;
-
-        if (event.results[event.results.length - 1].isFinal) {
-          voiceRecognition.stop();
-          submitVoiceTranscript(transcript.trim());
-        }
-      };
-
-      voiceRecognition.onerror = (event) => {
-        isVoiceListening = false;
-        if (event.error !== 'no-speech' && event.error !== 'aborted') {
-          showToast('Voice recognition error: ' + event.error, 'error');
-        }
-        setVoiceState('idle');
-      };
-
-      voiceRecognition.onend = () => {
-        isVoiceListening = false;
-        if (voiceFaceWrapEl.classList.contains('voice-listening')) setVoiceState('idle');
-      };
-
-      voiceRecognition.start();
-    };
-
-    function submitVoiceTranscript(transcript) {
-      if (!transcript) {
-        setVoiceState('idle');
-        return;
-      }
-      if (!apiKeyInput.value.trim()) {
-        setVoiceState('idle');
-        showToast('OpenRouter API key is required!', 'error');
-        return;
-      }
-      setVoiceState('thinking');
-      userInputEl.value = transcript;
-      sendPrompt();
-    }
-
-    // Strip markdown syntax so speech synthesis doesn't read symbols aloud
-    function stripMarkdownForSpeech(text) {
-      return text
-        .replace(/```[\s\S]*?```/g, ' Code block omitted. ')
-        .replace(/`([^`]+)`/g, '$1')
-        .replace(/!\[[^\]]*\]\([^)]*\)/g, ' image ')
-        .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-        .replace(/[*_#>~-]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-    }
-
-    // Pick the most natural-sounding male voice available in this browser
-    let cachedMaleVoice = null;
-    let voicesReadyPromise = null;
-
-    const MALE_VOICE_PREFERENCES = [
-      // Higher-quality "neural"/"natural" male voices first (Edge/Chrome on Windows, Chrome on Android)
-      'Microsoft Guy Online (Natural) - English (United States)',
-      'Microsoft Andrew Online (Natural) - English (United States)',
-      'Microsoft Ryan Online (Natural) - English (United Kingdom)',
-      'Google UK English Male',
-      'Microsoft David - English (United States)',
-      'Microsoft David Desktop - English (United States)',
-      'Microsoft Mark - English (United States)',
-      'Microsoft James - English (Australia)',
-      'Daniel', // macOS/iOS
-      'Alex',   // macOS
-      'Fred',
-      'Google US English Male'
-    ];
-
-    function pickMaleVoice(voices) {
-      // 1. Exact name match against our preference list, in priority order
-      for (const preferred of MALE_VOICE_PREFERENCES) {
-        const hit = voices.find(v => v.name === preferred);
-        if (hit) return hit;
-      }
-      // 2. Fuzzy match: any English voice whose name hints at being male
-      const maleHints = /\b(male|man|guy|david|mark|daniel|alex|fred|james|ryan|andrew|george|oliver|thomas|arthur|gordon|liam|guy)\b/i;
-      const fuzzy = voices.find(v => /en(-|_)/i.test(v.lang) && maleHints.test(v.name));
-      if (fuzzy) return fuzzy;
-      // 3. Fallback: first English voice at all
-      return voices.find(v => /en(-|_)/i.test(v.lang)) || voices[0] || null;
-    }
-
-    function getVoicesAsync() {
-      if (voicesReadyPromise) return voicesReadyPromise;
-      voicesReadyPromise = new Promise((resolve) => {
-        const existing = window.speechSynthesis.getVoices();
-        if (existing.length) {
-          resolve(existing);
-          return;
-        }
-        window.speechSynthesis.onvoiceschanged = () => {
-          resolve(window.speechSynthesis.getVoices());
-        };
-        // Safety timeout in case the event never fires on some browsers
-        setTimeout(() => resolve(window.speechSynthesis.getVoices()), 1000);
-      });
-      return voicesReadyPromise;
-    }
-
-    async function speakAssistantReply(rawText) {
-      if (!voiceModeActive || !('speechSynthesis' in window)) return;
-      const clean = stripMarkdownForSpeech(rawText);
-      if (!clean) { setVoiceState('idle'); return; }
-
-      if (!cachedMaleVoice) {
-        const voices = await getVoicesAsync();
-        cachedMaleVoice = pickMaleVoice(voices);
-      }
-
-      const utterance = new SpeechSynthesisUtterance(clean);
-      if (cachedMaleVoice) {
-        utterance.voice = cachedMaleVoice;
-        utterance.lang = cachedMaleVoice.lang;
-      }
-      // Slightly lower pitch and a touch slower than default reads as a calmer,
-      // more natural human male voice rather than a flat robotic TTS cadence.
-      utterance.rate = 0.96;
-      utterance.pitch = 0.85;
-      utterance.volume = 1.0;
-
-      utterance.onstart = () => {
-        setVoiceState('speaking');
-        startMouthFlap();
-      };
-      utterance.onend = () => {
-        stopMouthFlap();
-        setVoiceState('idle');
-      };
-      utterance.onerror = () => {
-        stopMouthFlap();
-        setVoiceState('idle');
-      };
-
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(utterance);
-    }
-
-    function startMouthFlap() {
-      stopMouthFlap();
-      mouthFlapInterval = setInterval(() => {
-        const shape = Math.random() > 0.3
-          ? MOUTH_OPEN_SHAPES[Math.floor(Math.random() * MOUTH_OPEN_SHAPES.length)]
-          : MOUTH_CLOSED;
-        voiceMouthEl.setAttribute('d', shape);
-      }, 110);
-    }
-
-    function stopMouthFlap() {
-      if (mouthFlapInterval) {
-        clearInterval(mouthFlapInterval);
-        mouthFlapInterval = null;
-      }
-      voiceMouthEl.setAttribute('d', MOUTH_CLOSED);
-    }
-
-    // ---- Multi-session Chat History ----
-
-    function loadSessions() {
-      try {
-        const raw = localStorage.getItem(SESSIONS_KEY);
-        return raw ? JSON.parse(raw) : [];
-      } catch (e) {
-        console.error("Error reading chat sessions:", e);
-        return [];
-      }
-    }
-
-    function saveSessions(sessions) {
-      localStorage.setItem(SESSIONS_KEY, JSON.stringify(sessions));
-    }
-
-    function generateSessionId() {
-      return 'sess-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8);
-    }
-
-    function deriveSessionTitle(msgs) {
-      const firstUser = msgs.find(m => m.role === 'user');
-      if (!firstUser || !firstUser.content) return 'New Chat';
-      const text = firstUser.content.trim().replace(/\s+/g, ' ');
-      return text.length > 42 ? text.substring(0, 42) + '…' : text;
-    }
-
-    // Persist the in-memory `messages` array as the current session
-    function saveCurrentSession() {
-      if (messages.length === 0) return;
-      if (!currentSessionId) currentSessionId = generateSessionId();
-
-      const sessions = loadSessions();
-      const idx = sessions.findIndex(s => s.id === currentSessionId);
-      const sessionData = {
-        id: currentSessionId,
-        title: deriveSessionTitle(messages),
-        messages: messages,
-        updatedAt: Date.now()
-      };
-      if (idx >= 0) {
-        sessions[idx] = sessionData;
-      } else {
-        sessions.unshift(sessionData);
-      }
-      saveSessions(sessions);
-      renderChatHistoryList();
-    }
-
-    function renderChatHistoryList() {
-      const sessions = loadSessions().sort((a, b) => b.updatedAt - a.updatedAt);
-      historyCountBadgeEl.innerText = sessions.length;
-
-      // Clear list except the empty-state message node
-      Array.from(chatHistoryListEl.children).forEach(child => {
-        if (child.id !== 'emptyHistoryMsg') child.remove();
-      });
-
-      if (sessions.length === 0) {
-        emptyHistoryMsgEl.style.display = 'block';
-        return;
-      }
-      emptyHistoryMsgEl.style.display = 'none';
-
-      sessions.forEach((session, idx) => {
-        const item = document.createElement('div');
-        const isActive = session.id === currentSessionId;
-        item.className = `group flex items-center gap-1.5 rounded-lg px-2.5 py-2 cursor-pointer transition-all ${isActive ? 'bg-amber-500/10 border border-amber-500/40' : 'hover:bg-slate-100 border border-transparent'}`;
-        item.style.animation = `fadeIn 0.25s ease-out backwards`;
-        item.style.animationDelay = `${Math.min(idx * 0.04, 0.3)}s`;
-        item.onclick = () => switchToSession(session.id);
-
-        const label = document.createElement('span');
-        label.className = `flex-1 min-w-0 truncate text-xs font-mono ${isActive ? 'text-amber-700 font-semibold' : 'text-slate-600'}`;
-        label.innerText = session.title || 'New Chat';
-        item.appendChild(label);
-
-        const delBtn = document.createElement('button');
-        delBtn.className = 'shrink-0 p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 opacity-0 group-hover:opacity-100 transition-all';
-        delBtn.title = 'Delete chat';
-        delBtn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>`;
-        delBtn.onclick = (e) => {
-          e.stopPropagation();
-          deleteSession(session.id);
-        };
-        item.appendChild(delBtn);
-
-        chatHistoryListEl.appendChild(item);
-      });
-    }
-
-    function clearChatDOM() {
-      const bubbles = chatHistoryEl.querySelectorAll('.chat-bubble-container');
-      bubbles.forEach(b => b.remove());
-    }
-
-    window.startNewChat = function() {
-      // Persist whatever is currently open before switching away
-      saveCurrentSession();
-
-      messages = [];
-      currentSessionId = null;
-      clearChatDOM();
-      zeroStateEl.style.display = 'flex';
-      renderChatHistoryList();
-
-      if (window.innerWidth < 1024) toggleMobileSidebar();
-    };
-
-    window.switchToSession = function(id) {
-      if (id === currentSessionId) return;
-      // Persist current work before navigating away
-      saveCurrentSession();
-
-      const sessions = loadSessions();
-      const session = sessions.find(s => s.id === id);
-      if (!session) return;
-
-      messages = session.messages || [];
-      currentSessionId = session.id;
-
-      clearChatDOM();
-      if (messages.length > 0) {
-        zeroStateEl.style.display = 'none';
-        messages.forEach((msg) => renderMessageBubble(msg.role, msg.content, msg.reasoning || ''));
-        const lastMsg = messages[messages.length - 1];
-        if (lastMsg && lastMsg.role === 'assistant' && lastMsg.content) {
-          const bubbles = chatHistoryEl.querySelectorAll('.chat-bubble-container');
-          renderQuickReplies(bubbles[bubbles.length - 1]);
-        }
-        setTimeout(scrollToBottom, 100);
-      } else {
-        zeroStateEl.style.display = 'flex';
-      }
-      renderChatHistoryList();
-
-      if (window.innerWidth < 1024) toggleMobileSidebar();
-    };
-
-    window.deleteSession = function(id) {
-      if (!confirm("Delete this chat? This can't be undone.")) return;
-      let sessions = loadSessions();
-      sessions = sessions.filter(s => s.id !== id);
-      saveSessions(sessions);
-
-      if (id === currentSessionId) {
-        messages = [];
-        currentSessionId = null;
-        clearChatDOM();
-        zeroStateEl.style.display = 'flex';
-      }
-      renderChatHistoryList();
-      showToast('Chat deleted.');
-    };
-
-    window.exportCurrentChat = function() {
-      if (messages.length === 0) {
-        showToast('Nothing to export yet.', 'error');
-        return;
-      }
-      let md = `# ${deriveSessionTitle(messages)}\n\n`;
-      messages.forEach(m => {
-        md += `**${m.role === 'user' ? 'You' : 'MAN'}:**\n\n${m.content}\n\n---\n\n`;
-      });
-      const blob = new Blob([md], { type: 'text/markdown' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'man-chat-export.md';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      showToast('Chat exported.');
-    };
-
-    function loadChatHistory() {
-      // One-time migration from the old single-thread storage key
-      const legacy = localStorage.getItem('man_chat_history');
-      if (legacy) {
-        try {
-          const legacyMessages = JSON.parse(legacy);
-          if (legacyMessages.length > 0) {
-            const sessions = loadSessions();
-            sessions.unshift({
-              id: generateSessionId(),
-              title: deriveSessionTitle(legacyMessages),
-              messages: legacyMessages,
-              updatedAt: Date.now()
-            });
-            saveSessions(sessions);
-          }
-        } catch (e) {
-          console.error("Error migrating legacy chat history:", e);
-        }
-        localStorage.removeItem('man_chat_history');
-      }
-
-      const sessions = loadSessions().sort((a, b) => b.updatedAt - a.updatedAt);
-      renderChatHistoryList();
-
-      if (sessions.length > 0) {
-        switchToSession(sessions[0].id);
-      }
-    }
-
-    window.clearChatHistory = function() {
-      if (confirm("Are you sure you want to delete ALL saved chats? This can't be undone.")) {
-        messages = [];
-        currentSessionId = null;
-        saveSessions([]);
-        clearChatDOM();
-        zeroStateEl.style.display = 'flex';
-        renderChatHistoryList();
-        showToast('All chat history cleared.');
-      }
-    };
-
-
-    window.applySuggestedPrompt = function(promptText) {
-      userInputEl.value = promptText;
-      autoGrowTextarea();
-      userInputEl.focus();
-    };
-
-    window.handleTextareaKeydown = function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendPrompt();
-      }
-    };
-
-    window.copyCodeToClipboard = function(id) {
-      const codeEl = document.getElementById(id);
-      if (!codeEl) return;
-      const text = codeEl.innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Code block copied!');
-      }).catch(err => {
-        console.error('Copy failed: ', err);
-        showToast('Failed to copy', 'error');
-      });
-    };
-
-    window.toggleSidebarAccordion = function(btn) {
-       const content = btn.nextElementSibling;
-       const icon = btn.querySelector('.arrow-icon');
-       if(content.classList.contains('hidden')) {
-           content.classList.remove('hidden');
-           icon.style.transform = 'rotate(0deg)';
-       } else {
-           content.classList.add('hidden');
-           icon.style.transform = 'rotate(-90deg)';
-       }
-    }
-
-    window.toggleReasoning = function(header) {
-      const body = header.nextElementSibling;
-      const arrow = header.querySelector('.arrow-icon');
-      const textSpan = header.querySelector('.toggle-text');
-      if (body.classList.contains('hidden')) {
-        body.classList.remove('hidden');
-        textSpan.innerText = 'Collapse reasoning';
-        arrow.style.transform = 'rotate(0deg)';
-      } else {
-        body.classList.add('hidden');
-        textSpan.innerText = 'Expand reasoning';
-        arrow.style.transform = 'rotate(-90deg)';
-      }
-    };
-
-    window.stopGenerating = function() {
-      if (abortController) {
-        abortController.abort();
-        abortController = null;
-        isGenerating = false;
-        updateInputControlsState();
-        showToast('Response stopped.', 'warning');
-      }
-    };
-
-    window.sendPrompt = async function() {
-      const userText = userInputEl.value.trim();
-      if (!userText || isGenerating) return;
-
-      const apiKey = apiKeyInput.value.trim();
-      if (!apiKey) {
-        showToast('OpenRouter API key is required!', 'error');
-        if(window.innerWidth < 1024) toggleMobileSidebar(); 
-        apiKeyInput.focus();
-        return;
-      }
-
-      try {
-        await runPromptFlow(userText, apiKey);
-      } catch (setupErr) {
-        // Safety net: surface ANY error (even ones outside the streaming try/catch below)
-        // as a visible toast instead of letting it fail silently with no reply at all.
-        console.error('sendPrompt failed before/around streaming:', setupErr);
-        showToast('Something went wrong sending your message: ' + setupErr.message, 'error');
-        isGenerating = false;
-        updateInputControlsState();
-      }
-    };
-
-    async function runPromptFlow(userText, apiKey) {
-      // Hide zero-state
-      zeroStateEl.style.display = 'none';
-
-      // Remove any quick-reply chips left over from the previous assistant message
-      document.querySelectorAll('.quick-reply-row').forEach(el => el.remove());
-
-      // Add User Message
-      messages.push({ role: 'user', content: userText });
-      renderMessageBubble('user', userText);
-      saveCurrentSession();
-      
-      // Reset input
-      userInputEl.value = '';
-      userInputEl.style.height = 'auto'; // reset height
-      
-      scrollToBottom();
-
-      // Setup State
-      isGenerating = true;
-      updateInputControlsState();
-
-      // Create Assistant Bubble placeholder
-      const aiBubbleId = 'ai-' + Date.now();
-      renderMessageBubble('assistant', '', '', aiBubbleId);
-      
-      const aiBubble = document.getElementById(aiBubbleId);
-      const textContentEl = aiBubble.querySelector('.markdown-content');
-      const reasoningContainerEl = aiBubble.querySelector('.reasoning-container');
-      const reasoningBodyEl = aiBubble.querySelector('.reasoning-body');
-      const reasoningHeaderEl = aiBubble.querySelector('.reasoning-header');
-      const thinkingStatusEl = aiBubble.querySelector('.thinking-status');
-
-      // Init Stream
-      abortController = new AbortController();
-      let rawContent = '';
-      let rawReasoning = '';
-      let isThinking = false;
-
-      // Construct Payload
-      const systemDirective = systemPromptInput.value.trim();
-      const apiMessages = [];
-      if(systemDirective) apiMessages.push({ role: 'system', content: systemDirective });
-      
-      // Send last 10 messages for context
-      const messageHistorySubset = messages.slice(-10);
-      messageHistorySubset.forEach(msg => {
-        apiMessages.push({ role: msg.role, content: msg.content });
-      });
-
-      try {
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-            "HTTP-Referer": window.location.href,
-            "X-Title": "WebHut MAN Local"
-          },
-          body: JSON.stringify({
-            model: selectedModel,
-            messages: apiMessages,
-            stream: true,
-            include_reasoning: true // Request reasoning explicitly if supported
-          }),
-          signal: abortController.signal
-        });
-
-        if (!response.ok) {
-          const errText = await response.text();
-          let errObj = {};
-          try{ errObj = JSON.parse(errText); }catch(e){}
-          throw new Error(errObj.error?.message || `API Error: ${response.status}`);
-        }
-
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder("utf-8");
-        let buffer = "";
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split("\n");
-          buffer = lines.pop(); // keep incomplete line
-
-          for (const line of lines) {
-            const cleanLine = line.trim();
-            if (!cleanLine || cleanLine === "data: [DONE]") continue;
-
-            if (cleanLine.startsWith("data: ")) {
-              try {
-                const json = JSON.parse(cleanLine.substring(6));
-                const delta = json.choices[0]?.delta || {};
-                
-                // OpenRouter reasoning format
-                const reasoningDelta = delta.reasoning || delta.reasoning_content || "";
-                const contentDelta = delta.content || "";
-
-                if (reasoningDelta) {
-                  if (!isThinking) {
-                    isThinking = true;
-                    reasoningContainerEl.classList.remove('hidden');
-                  }
-                  rawReasoning += reasoningDelta;
-                  reasoningBodyEl.innerText = rawReasoning;
-                } 
-                else if (contentDelta) {
-                  // Fallback for models that output <think> tags inline
-                  let tempContent = contentDelta;
-                  if (tempContent.includes("<think>")) {
-                    isThinking = true;
-                    reasoningContainerEl.classList.remove('hidden');
-                    const parts = tempContent.split("<think>");
-                    rawContent += parts[0];
-                    tempContent = parts[1] || "";
-                  }
-
-                  if (isThinking) {
-                    if (tempContent.includes("</think>")) {
-                      const parts = tempContent.split("</think>");
-                      rawReasoning += parts[0];
-                      rawContent += parts[1] || "";
-                      isThinking = false;
-                      finishReasoningUI(thinkingStatusEl, reasoningHeaderEl);
-                    } else {
-                      rawReasoning += tempContent;
-                      reasoningBodyEl.innerText = rawReasoning;
-                    }
-                  } else {
-                    // Normal content stream
-                    // Finish thinking state if it was active via implicit API structure
-                    if(isThinking && rawReasoning.length > 0) {
-                        isThinking = false;
-                        finishReasoningUI(thinkingStatusEl, reasoningHeaderEl);
-                    }
-                    rawContent += tempContent;
-                    textContentEl.innerHTML = marked.parse(rawContent);
-                  }
-                }
-                
-                // Auto-scroll logic: only scroll if user is near bottom
-                const isNearBottom = chatHistoryEl.scrollHeight - chatHistoryEl.scrollTop - chatHistoryEl.clientHeight < 100;
-                if(isNearBottom) scrollToBottom();
-
-              } catch (err) {
-                // Ignore incomplete JSON parses in stream chunks
-              }
-            }
-          }
-        }
-
-        // Cleanup after stream completes
-        if (isThinking) {
-          finishReasoningUI(thinkingStatusEl, reasoningHeaderEl);
-        }
-        if (!rawReasoning) {
-          reasoningContainerEl.remove();
-        }
-
-        if (rawContent) {
-          textContentEl.innerHTML = marked.parse(rawContent);
-        } else {
-          // The model only produced reasoning/thinking tokens and no final answer text.
-          // Don't show a bare "Empty response" — give the person something actionable.
-          textContentEl.innerHTML = `
-            <div class="flex items-start gap-2 text-amber-700 bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm">
-              <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              <span>The selected model only "thought" and didn't return a final answer. This can happen with the free auto-router — try sending again, or pick a specific model from the sidebar.</span>
-            </div>
-          `;
-        }
-        
-        // Save to state
-        messages.push({ 
-          role: 'assistant', 
-          content: rawContent, 
-          reasoning: rawReasoning 
-        });
-        saveCurrentSession();
-        if (voiceModeActive) speakAssistantReply(rawContent);
-        if (rawContent) renderQuickReplies(aiBubble);
-
-      } catch (err) {
-        if (err.name === 'AbortError') {
-          textContentEl.innerHTML += `<div class="mt-4 text-xs font-mono text-rose-500 bg-rose-50 p-2 rounded inline-block border border-rose-100">[Stream Interrupted]</div>`;
-          if (rawContent) {
-            messages.push({ role: 'assistant', content: rawContent, reasoning: rawReasoning });
-            saveCurrentSession();
-          }
-        } else {
-          console.error(err);
-          textContentEl.innerHTML = `
-            <div class="p-4 bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-sm font-sans">
-              <div class="font-bold flex items-center gap-2 mb-1">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                Connection Error
-              </div>
-              <p>${err.message}</p>
-            </div>
-          `;
-          // Remove from messages if it failed completely to prevent bad state
-          if(!rawContent) messages.pop(); 
-        }
-      } finally {
-        isGenerating = false;
-        abortController = null;
-        updateInputControlsState();
-        scrollToBottom();
-        if (voiceModeActive && voiceFaceWrapEl.classList.contains('voice-thinking')) setVoiceState('idle');
-      }
-    }
-
-    function finishReasoningUI(thinkingStatus, reasoningHeader) {
-      thinkingStatus.innerHTML = `
-        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span>Thinking Process Complete</span>
-      `;
-      thinkingStatus.className = "flex items-center gap-1.5 text-emerald-600 font-bold";
-      reasoningHeader.className = "flex items-center justify-between cursor-pointer select-none text-[10px] text-slate-500 font-mono hover:text-slate-700 transition-colors";
-
-      // Auto-collapse once thinking is done — raw reasoning tokens are internal
-      // scratch work, not the reply, and shouldn't stay open looking like the answer.
-      const body = reasoningHeader.nextElementSibling;
-      const arrow = reasoningHeader.querySelector('.arrow-icon');
-      const textSpan = reasoningHeader.querySelector('.toggle-text');
-      if (body && !body.classList.contains('hidden')) {
-        body.classList.add('hidden');
-        if (textSpan) textSpan.innerText = 'Expand reasoning';
-        if (arrow) arrow.style.transform = 'rotate(-90deg)';
-      }
-    }
-
-    function updateInputControlsState() {
-      if (isGenerating) {
-        sendBtn.disabled = true;
-        sendBtn.classList.add('opacity-50');
-        stopBtn.classList.remove('hidden');
-        stopBtn.classList.add('flex');
-      } else {
-        sendBtn.disabled = false;
-        sendBtn.classList.remove('opacity-50');
-        stopBtn.classList.add('hidden');
-        stopBtn.classList.remove('flex');
-      }
-    }
-
-    function renderMessageBubble(role, content, reasoning = '', forceId = '') {
-      const container = document.createElement('div');
-      container.className = `chat-bubble-container flex w-full ${role === 'user' ? 'justify-end' : 'justify-start'} animate-[fadeIn_0.3s_ease-out]`;
-      if (forceId) container.id = forceId;
-
-      if (role === 'user') {
-        container.innerHTML = `
-          <div class="max-w-[85%] md:max-w-[75%] bg-slate-800 text-white px-5 py-3.5 rounded-2xl rounded-tr-sm text-sm leading-relaxed font-sans shadow-md">
-            <p class="whitespace-pre-wrap">${content}</p>
-          </div>
-        `;
-      } else {
-        const isCurrentlyThinking = (reasoning && !content);
-        const hasReasoning = reasoning !== '';
-        
-        container.innerHTML = `
-          <div class="max-w-[95%] md:max-w-[85%] flex gap-4 items-start w-full">
-            <div class="w-9 h-9 rounded-xl bg-white border border-amber-500/30 flex items-center justify-center shrink-0 shadow-sm mt-1">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-5 h-5 fill-amber-600">
-                <path d="M120 380V160L256 280L392 160V380M120 160C120 146.19 131.19 135 145 135C158.81 135 170 146.19 170 160C170 173.81 158.81 185 145 185C131.19 185 120 173.81 120 160ZM392 160C392 146.19 403.19 135 417 135C430.81 135 442 146.19 442 160C442 173.81 430.81 185 417 185C403.19 185 392 173.81 392 160Z" stroke="#1a7a20" stroke-width="25" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              </svg>
-            </div>
-            <div class="space-y-3 flex-1 min-w-0 bg-white/60 p-4 md:p-5 rounded-2xl rounded-tl-sm border border-slate-200/60 shadow-sm">
-              
-              <!-- Thinking / Reasoning Panel -->
-              <div class="reasoning-container ${hasReasoning ? '' : 'hidden'} bg-slate-50 border border-slate-200 rounded-xl p-3 md:p-4 text-xs font-mono text-slate-600">
-                <div class="reasoning-header flex items-center justify-between cursor-pointer select-none text-[10px] ${isCurrentlyThinking ? 'text-amber-600' : 'text-slate-500'}" onclick="toggleReasoning(this)">
-                  <span class="thinking-status flex items-center gap-2 ${isCurrentlyThinking ? 'text-amber-600 font-bold' : 'text-emerald-600 font-bold'}">
-                    ${isCurrentlyThinking ? `
-                      <svg class="w-4 h-4 animate-spin text-amber-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                      <span>Analyzing & Reasoning...</span>
-                    ` : `
-                      <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      <span>Thinking Process Complete</span>
-                    `}
-                  </span>
-                  <div class="flex items-center gap-1 hover:text-slate-700 transition-colors bg-slate-200/50 px-2 py-1 rounded">
-                    <span class="toggle-text">${isCurrentlyThinking ? 'Collapse' : 'Expand reasoning'}</span>
-                    <svg class="arrow-icon w-3.5 h-3.5 transition-transform duration-200 ${isCurrentlyThinking ? '' : '-rotate-90'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="reasoning-body ${isCurrentlyThinking ? '' : 'hidden'} mt-3 whitespace-pre-wrap leading-relaxed max-h-64 overflow-y-auto border-t border-slate-200 pt-3 text-slate-500">
-                  ${reasoning}
-                </div>
-              </div>
-
-              <!-- Main Markdown Output -->
-              <div class="markdown-content text-sm md:text-[15px] text-slate-800 leading-relaxed break-words font-sans">
-                ${content ? marked.parse(content) : '<span class="flex items-center gap-2 text-amber-600 font-mono text-xs font-semibold tracking-wide"><span class="w-2 h-2 bg-amber-500 rounded-full animate-ping"></span> Synthesizing response...</span>'}
-              </div>
-
-            </div>
-          </div>
-        `;
-      }
-
-      chatHistoryEl.appendChild(container);
-    }
-
-    // Quick Reply chips — one-tap follow-up suggestions shown under a finished assistant reply
-    const QUICK_REPLY_SUGGESTIONS = ['Tell me more', 'Explain simply', 'Give an example', 'Summarize that', 'What\'s next?'];
-
-    function renderQuickReplies(bubbleContainer) {
-      // Only one active set of chips at a time
-      document.querySelectorAll('.quick-reply-row').forEach(el => el.remove());
-      if (!bubbleContainer) return;
-
-      const contentWrapper = bubbleContainer.querySelector('.markdown-content');
-      if (!contentWrapper || !contentWrapper.parentElement) return;
-
-      const row = document.createElement('div');
-      row.className = 'quick-reply-row flex flex-wrap gap-2 pt-1 animate-[fadeIn_0.3s_ease-out]';
-
-      QUICK_REPLY_SUGGESTIONS.forEach(text => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'quick-reply-btn px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-medium font-sans transition-all active:scale-95 shadow-sm';
-        btn.textContent = text;
-        btn.onclick = () => {
-          if (isGenerating) return;
-          document.querySelectorAll('.quick-reply-row').forEach(el => el.remove());
-          userInputEl.value = text;
-          sendPrompt();
-        };
-        row.appendChild(btn);
-      });
-
-      contentWrapper.parentElement.appendChild(row);
-      scrollToBottom();
-    }
-
-    function scrollToBottom() {
-      chatHistoryEl.scrollTo({
-        top: chatHistoryEl.scrollHeight,
-        behavior: 'smooth'
-      });
-    }
-
-    // Show a "scroll to latest" FAB whenever the user has scrolled away from the bottom
-    chatHistoryEl.addEventListener('scroll', () => {
-      const distanceFromBottom = chatHistoryEl.scrollHeight - chatHistoryEl.scrollTop - chatHistoryEl.clientHeight;
-      const shouldShow = distanceFromBottom > 200;
-      scrollToBottomBtnEl.classList.toggle('is-visible', shouldShow);
-    });
-
-    function showToast(message, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      
-      let themeClasses = '';
-      let icon = '';
-
-      if(type === 'success') {
-        themeClasses = 'bg-white border-emerald-200 text-emerald-700 shadow-lg';
-        icon = `<svg class="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>`;
-      } else if(type === 'error') {
-        themeClasses = 'bg-white border-rose-200 text-rose-700 shadow-lg';
-        icon = `<svg class="w-4 h-4 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>`;
-      } else {
-        themeClasses = 'bg-white border-amber-200 text-amber-700 shadow-lg';
-        icon = `<svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
-      }
-
-      toast.className = `transform translate-y-4 opacity-0 transition-all duration-300 pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl border text-sm font-medium ${themeClasses}`;
-      
-      toast.innerHTML = `${icon}<span>${message}</span>`;
-      container.appendChild(toast);
-      
-      // Animate in
-      requestAnimationFrame(() => {
-        toast.classList.remove('translate-y-4', 'opacity-0');
-      });
-      
-      // Animate out
-      setTimeout(() => {
-        toast.classList.add('translate-y-4', 'opacity-0');
-        setTimeout(() => toast.remove(), 300);
-      }, 4000);
-    }
-  </script>
+    <div id="st"></div>
+    <div id="rep"></div>
+  </section>
+
+  <section class="view" id="v-projects">
+    <div class="head"><div><h1>Projects</h1><p>Add a live URL once. MAS analyzes it automatically every day.</p></div></div>
+    <div class="add"><input type="text" id="url" placeholder="https://yourclient.com" aria-label="Project URL" inputmode="url"><button class="btn" id="addBtn">Add</button></div>
+    <div id="plist"></div>
+  </section>
+
+  <section class="view" id="v-ideas">
+    <div class="head"><div><h1>Ideas</h1><p>Marketing, growth and features, grounded in your latest reports.</p></div><button class="btn ghost" id="clr">Clear chat</button></div>
+    <div class="chips" id="chips"></div>
+    <div id="chat"></div>
+    <div class="compose"><textarea id="q" rows="1" placeholder="Ask for marketing ideas, cold-call angles, features to add…"></textarea><button class="btn" id="send">Send</button></div>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <h2 class="disp" style="font-size:24px">Settings</h2>
+  <label for="key">OpenRouter API key</label>
+  <input type="password" id="key" placeholder="sk-or-v1-…" autocomplete="off">
+  <p class="h">Stored only in this browser. Get a free key at openrouter.ai/keys.</p>
+  <label for="mdl">Model</label>
+  <select id="mdl">
+    <option value="openrouter/free">MAS Auto (free models router)</option>
+    <option value="meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (free)</option>
+    <option value="google/gemma-3-12b-it:free">Gemma 3 12B (free)</option>
+    <option value="openai/gpt-oss-20b:free">GPT-OSS 20B (free)</option>
+  </select>
+  <div class="row"><button class="btn ghost" id="cx">Cancel</button><button class="btn" id="sv">Save</button></div>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const S={key:LS('mas_key',''),model:LS('mas_model','openrouter/free'),projects:LS('mas_projects',[]),reports:LS('mas_reports',{}),chat:LS('mas_chat',[])};
+const today=()=>new Date().toLocaleDateString('en-CA');
+const CATS=['design','seo','content','conversion','trust'];
+let cur=null,running=false;
+// Raw HTML in model output is escaped, never rendered.
+marked.use({renderer:{html:h=>esc(typeof h==='string'?h:h.text)}});
+const md=t=>marked.parse(t||'');
+
+// ---------- navigation ----------
+function show(v){$$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));$$('nav .t[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===v));if(v==='ideas')$('#q').focus({preventScroll:true})}
+$$('nav .t[data-v]').forEach(b=>b.onclick=()=>show(b.dataset.v));
+const dlg=$('#dlg');
+function openCfg(){$('#key').value=S.key;$('#mdl').value=S.model;dlg.showModal()}
+$('#cfg').onclick=openCfg;$('#cx').onclick=()=>dlg.close();
+$('#sv').onclick=()=>{S.key=$('#key').value.trim();S.model=$('#mdl').value;save('mas_key',S.key);save('mas_model',S.model);dlg.close();maybeAuto()};
+
+// ---------- API ----------
+async function llm(messages){
+  const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+S.key,'Content-Type':'application/json','HTTP-Referer':location.href,'X-Title':'WebHut MAS'},body:JSON.stringify({model:S.model,messages})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.error?.message||'AI request failed ('+r.status+')');
+  const t=j.choices?.[0]?.message?.content;
+  if(!t)throw new Error('The model returned an empty answer. Try again or switch model.');
+  return t;
+}
+async function readSite(url){
+  const r=await fetch('https://r.jina.ai/'+url,{headers:{Accept:'text/plain'}});
+  if(!r.ok)throw new Error('Could not read '+url+' ('+r.status+')');
+  return (await r.text()).slice(0,12000);
+}
+
+// ---------- projects ----------
+const host=u=>new URL(u).hostname.replace(/^www\./,'');
+function renderProjects(){
+  $('#plist').innerHTML=S.projects.length?S.projects.map(p=>`<div class="pr"><div><b>${esc(host(p.url))}</b><span>${esc(p.url)}</span></div><button data-id="${p.id}">Remove</button></div>`).join(''):'<div class="empty"><h2>No projects yet</h2>Paste a URL above. You only do this once.</div>';
+  $$('#plist button').forEach(b=>b.onclick=()=>{S.projects=S.projects.filter(p=>p.id!==b.dataset.id);save('mas_projects',S.projects);renderProjects();renderReports()});
+}
+function addProject(){
+  let u=$('#url').value.trim();if(!u)return;
+  if(!/^https?:\/\//i.test(u))u='https://'+u;
+  try{new URL(u)}catch{return alert('That does not look like a valid URL.')}
+  if(S.projects.some(p=>p.url===u))return;
+  S.projects.push({id:Date.now().toString(36),url:u,added:today()});save('mas_projects',S.projects);
+  $('#url').value='';renderProjects();renderReports();maybeAuto(true);
+}
+$('#addBtn').onclick=addProject;$('#url').onkeydown=e=>{if(e.key==='Enter')addProject()};
+
+// ---------- analysis ----------
+const prevRep=(pid,date)=>{for(const d of Object.keys(S.reports).sort().reverse())if(d<date&&S.reports[d][pid]?.md)return S.reports[d][pid]};
+async function analyze(p,date){
+  const page=await readSite(p.url),prev=prevRep(p.id,date);
+  const sys='You are MAS, the senior web strategist of WebHut, a small web development agency in India. You audit live websites for the agency owner. Be specific, honest and practical; quote real elements from the page. You only see the page text, so never claim to measure load speed.';
+  const usr=`Audit this website: ${p.url}\n\nPAGE CONTENT:\n${page}\n\n${prev?`YESTERDAY'S REPORT (for comparison, mention what changed):\n${prev.md.slice(0,1500)}\n\n`:''}Reply in exactly this format.\nLine 1: SCORES: design=NN, seo=NN, content=NN, conversion=NN, trust=NN (each 0-100)\nThen markdown with these ## sections:\n## Summary (2-3 sentences${prev?', include what changed since the last report':''})\n## What is working\n## Problems to fix (ordered by priority, each with the exact fix)\n## Do today (3 quick wins, under 1 hour each)\n## Marketing ideas (3 concrete ideas for this business, with a sample hook or headline)\n## Features to add now (3 features that would raise conversions)`;
+  const out=await llm([{role:'system',content:sys},{role:'user',content:usr}]);
+  const scores={};for(const m of out.matchAll(/\b(design|seo|content|conversion|trust)\s*[=:]\s*(\d{1,3})/gi))if(!(m[1].toLowerCase() in scores))scores[m[1].toLowerCase()]=Math.min(100,+m[2]);
+  return{md:out.replace(/^.*SCORES:.*$/im,'').trim(),scores,at:Date.now()};
+}
+async function runAll(){
+  if(running||!S.key||!S.projects.length)return;
+  running=true;$('#run').disabled=true;const date=today();S.reports[date]=S.reports[date]||{};let bad=0;
+  localStorage.setItem('mas_try',Date.now());
+  for(const [i,p] of S.projects.entries()){
+    $('#st').textContent=`Analyzing ${host(p.url)} (${i+1} of ${S.projects.length})…`;
+    try{S.reports[date][p.id]=await analyze(p,date)}catch(e){bad++;S.reports[date][p.id]={err:e.message,at:Date.now()}}
+    save('mas_reports',S.reports);cur=date;renderReports();
+  }
+  if(!bad)localStorage.setItem('mas_last',date);
+  $('#st').textContent=bad?`Finished with ${bad} problem${bad>1?'s':''}. Fix the issue and run again.`:'Report ready. MAS will run again automatically tomorrow when you open the app.';
+  running=false;$('#run').disabled=false;
+}
+function maybeAuto(force){
+  if(!S.key||!S.projects.length||running)return;
+  if(force||(localStorage.getItem('mas_last')!==today()&&Date.now()-(+localStorage.getItem('mas_try')||0)>30*60*1000))runAll();
+}
+$('#run').onclick=()=>{if(!S.key)return openCfg();if(!S.projects.length)return show('projects');runAll()};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)maybeAuto()});
+
+function meters(sc,pv){return CATS.filter(c=>sc?.[c]!=null).map(c=>{const v=sc[c],d=pv?.[c]!=null?v-pv[c]:0;return`<div class="m"><span>${c}</span><em>${v}${d?`<small class="${d>0?'up':'dn'}">${d>0?'+':''}${d}</small>`:''}</em><i>${Array.from({length:10},(_,i)=>`<b class="${i<Math.round(v/10)?'on':''}"></b>`).join('')}</i></div>`}).join('')}
+function renderReports(){
+  const ds=Object.keys(S.reports).sort().reverse();cur=cur&&S.reports[cur]?cur:ds[0];
+  $('#dates').innerHTML=ds.map(d=>`<option ${d===cur?'selected':''}>${d}</option>`).join('');$('#dates').style.display=ds.length?'':'none';
+  const cards=cur?S.projects.map(p=>{const r=S.reports[cur][p.id];if(!r)return'';const pv=prevRep(p.id,cur);
+    return`<article class="rep"><aside><h2>${esc(host(p.url))}</h2><small>${esc(cur)}</small>${r.err?'':meters(r.scores,pv?.scores)}</aside><div class="body md">${r.err?`<p class="err">${esc(r.err)}</p>`:md(r.md)}</div></article>`}).join(''):'';
+  $('#rep').innerHTML=cards||`<div class="empty"><h2>${S.projects.length?'No report yet':'Start with one URL'}</h2>${!S.key?'Add your OpenRouter key in Settings, then ':''}${S.projects.length?'run the first analysis.':'add a project under Projects. Reports build up here day by day.'}</div>`;
+}
+$('#dates').onchange=e=>{cur=e.target.value;renderReports()};
+
+// ---------- ideas chat ----------
+const CHIPS=['Marketing ideas for this week','Features I should add right now','Write a cold-call script for local businesses','How do I upsell my existing clients?','What should I fix first across my projects?'];
+function context(){
+  const d=Object.keys(S.reports).sort().reverse()[0];
+  const rs=d?S.projects.map(p=>S.reports[d][p.id]&&!S.reports[d][p.id].err?`- ${p.url} (${d}) scores ${JSON.stringify(S.reports[d][p.id].scores)}\n${S.reports[d][p.id].md.slice(0,1200)}`:`- ${p.url}: no report yet`).join('\n'):'No reports yet.';
+  return`You are MAS, the strategy brain of WebHut, a web development agency in Kerala, India that builds and ships client websites fast (about 48 hours). The owner is a young founder who wants sharp, practical, professional advice: marketing ideas, lead generation, pricing and upsells, and features worth adding to client sites. Keep answers concrete, prioritized and short enough to act on. Do not write full websites or code; the owner builds those elsewhere.\n\nTheir projects and latest reports:\n${rs}`;
+}
+function renderChat(){
+  $('#chat').innerHTML=S.chat.map(m=>`<div class="msg ${m.role==='user'?'u':'a md'}">${m.role==='user'?esc(m.content):md(m.content)}</div>`).join('');
+  $('#chips').style.display=S.chat.length?'none':'flex';
+}
+async function ask(text){
+  if(!text.trim())return;if(!S.key)return openCfg();
+  S.chat.push({role:'user',content:text});renderChat();$('#q').value='';
+  const b=$('#send');b.disabled=true;b.textContent='…';scrollTo2();
+  try{const r=await llm([{role:'system',content:context()},...S.chat.slice(-12)]);S.chat.push({role:'assistant',content:r})}
+  catch(e){S.chat.push({role:'assistant',content:'**Error:** '+e.message})}
+  S.chat=S.chat.slice(-30);save('mas_chat',S.chat);renderChat();b.disabled=false;b.textContent='Send';scrollTo2();
+}
+const scrollTo2=()=>{const m=$('main');m.scrollTop=m.scrollHeight};
+$('#chips').innerHTML=CHIPS.map(c=>`<button>${esc(c)}</button>`).join('');
+$$('#chips button').forEach(b=>b.onclick=()=>ask(b.textContent));
+$('#send').onclick=()=>ask($('#q').value);
+$('#q').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask($('#q').value)}};
+$('#clr').onclick=()=>{S.chat=[];save('mas_chat',S.chat);renderChat()};
+
+// ---------- boot ----------
+if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+renderProjects();renderReports();renderChat();
+if(!S.key)setTimeout(openCfg,400);else maybeAuto();
+</script>
 </body>
 </html>
