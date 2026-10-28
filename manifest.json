@@ -1,20 +1,13 @@
 {
-  "name": "WebHut MAN AI",
-  "short_name": "MAN",
+  "name": "WebHut MAS",
+  "short_name": "MAS",
+  "description": "Multi-Agent System: daily project analysis and growth ideas",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#fcfcfc",
-  "theme_color": "#1a7a20",
+  "background_color": "#f2f5f0",
+  "theme_color": "#0b2016",
   "icons": [
-    {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMDAiIGZpbGw9IiNmY2ZjZmMiLz48cGF0aCBkPSJNMTIwIDM4MFYxNjBMMjU2IDI4MEwzOTIgMTYwVjM4MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWE3YTIwIiBzdHJva2Utd2lkdGg9IjQwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIxNjAiIHI9IjI1IiBmaWxsPSIjMWE3YTIwIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjgwIiByPSIyNSIgZmlsbD0iIzFhN2EyMCIvPjxjaXJjbGUgY3g9IjM5MiIgY3k9IjE2MCIgcj0iMjUiIGZpbGw9IiMxYTdhMjAiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIzODAiIHI9IjI1IiBmaWxsPSIjMWE3YTIwIi8+PGNpcmNsZSBjeD0iMzkyIiBjeT0iMzgwIiByPSIyNSIgZmlsbD0iIzFhN2EyMCIvPjxsaW5lIHgxPSIxMjAiIHkxPSIyNzAiIHgyPSIzOTIiIHkyPSIyNzAiIHN0cm9rZT0iIzFhN2EyMCIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLW9wYWNpdHk9IjAuMyIgc3Ryb2tlLWRhc2hhcnJheT0iMTAgMTAiLz48bGluZSB4MT0iMjU2IiB5MT0iMjgwIiB4Mj0iMjU2IiB5Mj0iNDIwIiBzdHJva2U9IiMxYTdhMjAiIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1vcGFjaXR5PSIwLjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEwIDEwIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iNDIwIiByPSIxNSIgZmlsbD0iIzFhN2EyMCIgZmlsbC1vcGFjaXR5PSIwLjUiLz48L3N2Zz4=",
-      "sizes": "192x192",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMDAiIGZpbGw9IiNmY2ZjZmMiLz48cGF0aCBkPSJNMTIwIDM4MFYxNjBMMjU2IDI4MEwzOTIgMTYwVjM4MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWE3YTIwIiBzdHJva2Utd2lkdGg9IjQwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIxNjAiIHI9IjI1IiBmaWxsPSIjMWE3YTIwIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjgwIiByPSIyNSIgZmlsbD0iIzFhN2EyMCIvPjxjaXJjbGUgY3g9IjM5MiIgY3k9IjE2MCIgcj0iMjUiIGZpbGw9IiMxYTdhMjAiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSIzODAiIHI9IjI1IiBmaWxsPSIjMWE3YTIwIi8+PGNpcmNsZSBjeD0iMzkyIiBjeT0iMzgwIiByPSIyNSIgZmlsbD0iIzFhN2EyMCIvPjxsaW5lIHgxPSIxMjAiIHkxPSIyNzAiIHgyPSIzOTIiIHkyPSIyNzAiIHN0cm9rZT0iIzFhN2EyMCIgc3Ryb2tlLXdpZHRoPSIxMCIgc3Ryb2tlLW9wYWNpdHk9IjAuMyIgc3Ryb2tlLWRhc2hhcnJheT0iMTAgMTAiLz48bGluZSB4MT0iMjU2IiB5MT0iMjgwIiB4Mj0iMjU2IiB5Mj0iNDIwIiBzdHJva2U9IiMxYTdhMjAiIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1vcGFjaXR5PSIwLjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEwIDEwIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iNDIwIiByPSIxNSIgZmlsbD0iIzFhN2EyMCIgZmlsbC1vcGFjaXR5PSIwLjUiLz48L3N2Zz4=",
-      "sizes": "512x512",
-      "type": "image/svg+xml"
-    }
+    {"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230b2016'/%3E%3Cpath d='M120 380V160L256 280L392 160V380' fill='none' stroke='%23fff' stroke-width='40' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='120' cy='160' r='28' fill='%237fd38a'/%3E%3Ccircle cx='256' cy='280' r='28' fill='%237fd38a'/%3E%3Ccircle cx='392' cy='160' r='28' fill='%237fd38a'/%3E%3C/svg%3E", "sizes": "192x192", "type": "image/svg+xml"},
+    {"src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230b2016'/%3E%3Cpath d='M120 380V160L256 280L392 160V380' fill='none' stroke='%23fff' stroke-width='40' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='120' cy='160' r='28' fill='%237fd38a'/%3E%3Ccircle cx='256' cy='280' r='28' fill='%237fd38a'/%3E%3Ccircle cx='392' cy='160' r='28' fill='%237fd38a'/%3E%3C/svg%3E", "sizes": "512x512", "type": "image/svg+xml"}
   ]
 }

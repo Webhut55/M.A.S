@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MAS — WebHut Multi-Agent System</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0b2016">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MAS">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230b2016'/%3E%3Cpath d='M120 380V160L256 280L392 160V380' fill='none' stroke='%23fff' stroke-width='40' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='120' cy='160' r='28' fill='%237fd38a'/%3E%3Ccircle cx='256' cy='280' r='28' fill='%237fd38a'/%3E%3Ccircle cx='392' cy='160' r='28' fill='%237fd38a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<style>
+:root{--ink:#0b2016;--forest:#123b22;--leaf:#1a7a20;--lime:#7fd38a;--paper:#f2f5f0;--line:#dbe4d9;--mute:#5d7565;--warn:#b0621a;--bad:#a63a2b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:15px/1.6 'Instrument Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);display:flex}
+h1,h2,h3,.disp{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.025em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--leaf);outline-offset:2px}
+nav{width:236px;flex:none;background:var(--ink);color:#b9d1bf;display:flex;flex-direction:column;padding:22px 14px;gap:4px}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px 22px}
+.brand svg{width:36px;height:36px}
+.brand b{display:block;color:#fff;font:800 20px 'Bricolage Grotesque';letter-spacing:-.02em;line-height:1.1}
+.brand span{font-size:12px;color:#7da38a}
+nav button.t{display:flex;align-items:center;gap:11px;background:none;border:0;color:inherit;padding:10px 12px;border-radius:10px;text-align:left;font-weight:500}
+nav button.t:hover{background:#ffffff0d}
+nav button.t.on{background:var(--forest);color:#fff;box-shadow:inset 3px 0 0 var(--lime)}
+nav svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav .sp{flex:1}
+main{flex:1;min-width:0;overflow:auto;padding:34px clamp(18px,4vw,52px) 60px}
+.view{display:none;max-width:980px;margin:0 auto}
+.view.on{display:block}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:26px}
+.head h1{font-size:clamp(28px,4vw,42px);line-height:1.05;font-weight:800}
+.head p{color:var(--mute);margin-top:6px}
+.btn{background:var(--leaf);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:600;transition:background .15s}
+.btn:hover{background:#146018}
+.btn:disabled{opacity:.55;cursor:wait}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:#eaf1e8}
+select,input[type=text],input[type=password],textarea{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+select.sm{width:auto;padding:9px 12px}
+#st{font-size:13px;color:var(--mute);margin-bottom:18px;min-height:20px}
+.rep{display:grid;grid-template-columns:250px 1fr;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:22px}
+.rep aside{background:var(--forest);color:#d4e6d8;padding:24px 22px}
+.rep aside h2{color:#fff;font-size:20px;font-weight:700;word-break:break-all;line-height:1.2}
+.rep aside small{display:block;color:#86ad92;margin:4px 0 22px;font-size:12px}
+.m{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin-bottom:13px;font-size:13px}
+.m span{text-transform:capitalize}
+.m em{font:700 15px 'Bricolage Grotesque';font-style:normal;color:#fff;text-align:right}
+.m small{font:600 11px 'Instrument Sans';margin-left:5px}
+.up{color:var(--lime)}.dn{color:#f0a287}
+.m i{grid-column:1/3;display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.m b{height:6px;border-radius:2px;background:#ffffff1c}
+.m b.on{background:var(--lime)}
+.body{padding:26px 30px;min-width:0}
+.md h2{font-size:19px;margin:22px 0 8px;font-weight:700}
+.md h2:first-child{margin-top:0}
+.md h3{font-size:16px;margin:16px 0 6px}
+.md p{margin:8px 0}
+.md ul,.md ol{margin:8px 0 8px 22px}
+.md li{margin:4px 0}
+.md strong{font-weight:600}
+.md a{color:var(--leaf)}
+.md code{background:#eaf1e8;border-radius:5px;padding:1px 5px;font-size:.9em}
+.md pre{background:var(--ink);color:#d4e6d8;border-radius:10px;padding:12px;overflow:auto;margin:10px 0}
+.md pre code{background:none;padding:0}
+.md table{border-collapse:collapse;margin:10px 0;display:block;overflow:auto}
+.md td,.md th{border:1px solid var(--line);padding:6px 10px;text-align:left}
+.err{color:var(--bad)}
+.empty{border:1px dashed #b8c9b9;border-radius:18px;padding:44px 24px;text-align:center;color:var(--mute)}
+.empty h2{color:var(--ink);font-size:22px;margin-bottom:6px}
+.add{display:flex;gap:10px;margin-bottom:20px}
+.pr{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px}
+.pr div{flex:1;min-width:0}
+.pr b{display:block;font:700 17px 'Bricolage Grotesque'}
+.pr span{font-size:13px;color:var(--mute);word-break:break-all}
+.pr button{background:none;border:0;color:var(--bad);font-weight:500;padding:6px 8px}
+#chat{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
+.msg{max-width:86%;padding:12px 16px;border-radius:16px}
+.msg.u{align-self:flex-end;background:var(--forest);color:#fff;border-bottom-right-radius:4px;white-space:pre-wrap}
+.msg.a{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chips button{background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:500}
+.chips button:hover{border-color:var(--leaf);color:var(--leaf)}
+.compose{display:flex;gap:10px;align-items:flex-end;position:sticky;bottom:0;background:var(--paper);padding-top:8px}
+.compose textarea{resize:none;max-height:150px}
+dialog{border:0;border-radius:18px;padding:26px;width:min(440px,92vw);margin:auto;box-shadow:0 24px 70px #0b201655}
+dialog::backdrop{background:#0b2016aa}
+dialog label{display:block;font-weight:600;margin:14px 0 6px}
+dialog p.h{font-size:13px;color:var(--mute);margin-top:6px}
+.row{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+@media(max-width:820px){
+body{flex-direction:column-reverse}
+nav{width:100%;flex-direction:row;padding:6px 8px calc(6px + env(safe-area-inset-bottom));gap:2px;justify-content:space-around}
+.brand,nav .sp{display:none}
+nav button.t{flex-direction:column;gap:2px;font-size:11px;padding:7px 10px}
+nav button.t.on{box-shadow:none}
+main{padding-top:calc(24px + env(safe-area-inset-top))}
+.rep{grid-template-columns:1fr}
+.body{padding:20px}
+.msg{max-width:94%}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand"><svg viewBox="0 0 512 512"><rect width="512" height="512" rx="110" fill="#123b22"/><path d="M120 380V160L256 280L392 160V380" fill="none" stroke="#fff" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/><circle cx="120" cy="160" r="28" fill="#7fd38a"/><circle cx="256" cy="280" r="28" fill="#7fd38a"/><circle cx="392" cy="160" r="28" fill="#7fd38a"/></svg><div><b>MAS</b><span>WebHut Multi-Agent System</span></div></div>
+  <button class="t on" data-v="reports"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Reports</button>
+  <button class="t" data-v="projects"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>Projects</button>
+  <button class="t" data-v="ideas"><svg class="i" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>Ideas</button>
+  <div class="sp"></div>
+  <button class="t" id="cfg"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+</nav>
+
+<main>
+  <section class="view on" id="v-reports">
+    <div class="head">
+      <div><h1>Daily briefing</h1><p>Every project, re-read each day and scored against the day before.</p></div>
+      <div style="display:flex;gap:10px"><select class="sm" id="dates" aria-label="Report date"></select><button class="btn" id="run">Run analysis now</button></div>
+    </div>
+    <div id="st"></div>
+    <div id="rep"></div>
+  </section>
+
+  <section class="view" id="v-projects">
+    <div class="head"><div><h1>Projects</h1><p>Add a live URL once. MAS analyzes it automatically every day.</p></div></div>
+    <div class="add"><input type="text" id="url" placeholder="https://yourclient.com" aria-label="Project URL" inputmode="url"><button class="btn" id="addBtn">Add</button></div>
+    <div id="plist"></div>
+  </section>
+
+  <section class="view" id="v-ideas">
+    <div class="head"><div><h1>Ideas</h1><p>Marketing, growth and features, grounded in your latest reports.</p></div><button class="btn ghost" id="clr">Clear chat</button></div>
+    <div class="chips" id="chips"></div>
+    <div id="chat"></div>
+    <div class="compose"><textarea id="q" rows="1" placeholder="Ask for marketing ideas, cold-call angles, features to add…"></textarea><button class="btn" id="send">Send</button></div>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <h2 class="disp" style="font-size:24px">Settings</h2>
+  <label for="key">OpenRouter API key</label>
+  <input type="password" id="key" placeholder="sk-or-v1-…" autocomplete="off">
+  <p class="h">Stored only in this browser. Get a free key at openrouter.ai/keys.</p>
+  <label for="mdl">Model</label>
+  <select id="mdl">
+    <option value="openrouter/free">MAS Auto (free models router)</option>
+    <option value="meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (free)</option>
+    <option value="google/gemma-3-12b-it:free">Gemma 3 12B (free)</option>
+    <option value="openai/gpt-oss-20b:free">GPT-OSS 20B (free)</option>
+  </select>
+  <div class="row"><button class="btn ghost" id="cx">Cancel</button><button class="btn" id="sv">Save</button></div>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const S={key:LS('mas_key',''),model:LS('mas_model','openrouter/free'),projects:LS('mas_projects',[]),reports:LS('mas_reports',{}),chat:LS('mas_chat',[])};
+const today=()=>new Date().toLocaleDateString('en-CA');
+const CATS=['design','seo','content','conversion','trust'];
+let cur=null,running=false;
+// Raw HTML in model output is escaped, never rendered.
+marked.use({renderer:{html:h=>esc(typeof h==='string'?h:h.text)}});
+const md=t=>marked.parse(t||'');
+
+// ---------- navigation ----------
+function show(v){$$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));$$('nav .t[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===v));if(v==='ideas')$('#q').focus({preventScroll:true})}
+$$('nav .t[data-v]').forEach(b=>b.onclick=()=>show(b.dataset.v));
+const dlg=$('#dlg');
+function openCfg(){$('#key').value=S.key;$('#mdl').value=S.model;dlg.showModal()}
+$('#cfg').onclick=openCfg;$('#cx').onclick=()=>dlg.close();
+$('#sv').onclick=()=>{S.key=$('#key').value.trim();S.model=$('#mdl').value;save('mas_key',S.key);save('mas_model',S.model);dlg.close();maybeAuto()};
+
+// ---------- API ----------
+async function llm(messages){
+  const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+S.key,'Content-Type':'application/json','HTTP-Referer':location.href,'X-Title':'WebHut MAS'},body:JSON.stringify({model:S.model,messages})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(j.error?.message||'AI request failed ('+r.status+')');
+  const t=j.choices?.[0]?.message?.content;
+  if(!t)throw new Error('The model returned an empty answer. Try again or switch model.');
+  return t;
+}
+async function readSite(url){
+  const r=await fetch('https://r.jina.ai/'+url,{headers:{Accept:'text/plain'}});
+  if(!r.ok)throw new Error('Could not read '+url+' ('+r.status+')');
+  return (await r.text()).slice(0,12000);
+}
+
+// ---------- projects ----------
+const host=u=>new URL(u).hostname.replace(/^www\./,'');
+function renderProjects(){
+  $('#plist').innerHTML=S.projects.length?S.projects.map(p=>`<div class="pr"><div><b>${esc(host(p.url))}</b><span>${esc(p.url)}</span></div><button data-id="${p.id}">Remove</button></div>`).join(''):'<div class="empty"><h2>No projects yet</h2>Paste a URL above. You only do this once.</div>';
+  $$('#plist button').forEach(b=>b.onclick=()=>{S.projects=S.projects.filter(p=>p.id!==b.dataset.id);save('mas_projects',S.projects);renderProjects();renderReports()});
+}
+function addProject(){
+  let u=$('#url').value.trim();if(!u)return;
+  if(!/^https?:\/\//i.test(u))u='https://'+u;
+  try{new URL(u)}catch{return alert('That does not look like a valid URL.')}
+  if(S.projects.some(p=>p.url===u))return;
+  S.projects.push({id:Date.now().toString(36),url:u,added:today()});save('mas_projects',S.projects);
+  $('#url').value='';renderProjects();renderReports();maybeAuto(true);
+}
+$('#addBtn').onclick=addProject;$('#url').onkeydown=e=>{if(e.key==='Enter')addProject()};
+
+// ---------- analysis ----------
+const prevRep=(pid,date)=>{for(const d of Object.keys(S.reports).sort().reverse())if(d<date&&S.reports[d][pid]?.md)return S.reports[d][pid]};
+async function analyze(p,date){
+  const page=await readSite(p.url),prev=prevRep(p.id,date);
+  const sys='You are MAS, the senior web strategist of WebHut, a small web development agency in India. You audit live websites for the agency owner. Be specific, honest and practical; quote real elements from the page. You only see the page text, so never claim to measure load speed.';
+  const usr=`Audit this website: ${p.url}\n\nPAGE CONTENT:\n${page}\n\n${prev?`YESTERDAY'S REPORT (for comparison, mention what changed):\n${prev.md.slice(0,1500)}\n\n`:''}Reply in exactly this format.\nLine 1: SCORES: design=NN, seo=NN, content=NN, conversion=NN, trust=NN (each 0-100)\nThen markdown with these ## sections:\n## Summary (2-3 sentences${prev?', include what changed since the last report':''})\n## What is working\n## Problems to fix (ordered by priority, each with the exact fix)\n## Do today (3 quick wins, under 1 hour each)\n## Marketing ideas (3 concrete ideas for this business, with a sample hook or headline)\n## Features to add now (3 features that would raise conversions)`;
+  const out=await llm([{role:'system',content:sys},{role:'user',content:usr}]);
+  const scores={};for(const m of out.matchAll(/\b(design|seo|content|conversion|trust)\s*[=:]\s*(\d{1,3})/gi))if(!(m[1].toLowerCase() in scores))scores[m[1].toLowerCase()]=Math.min(100,+m[2]);
+  return{md:out.replace(/^.*SCORES:.*$/im,'').trim(),scores,at:Date.now()};
+}
+async function runAll(){
+  if(running||!S.key||!S.projects.length)return;
+  running=true;$('#run').disabled=true;const date=today();S.reports[date]=S.reports[date]||{};let bad=0;
+  localStorage.setItem('mas_try',Date.now());
+  for(const [i,p] of S.projects.entries()){
+    $('#st').textContent=`Analyzing ${host(p.url)} (${i+1} of ${S.projects.length})…`;
+    try{S.reports[date][p.id]=await analyze(p,date)}catch(e){bad++;S.reports[date][p.id]={err:e.message,at:Date.now()}}
+    save('mas_reports',S.reports);cur=date;renderReports();
+  }
+  if(!bad)localStorage.setItem('mas_last',date);
+  $('#st').textContent=bad?`Finished with ${bad} problem${bad>1?'s':''}. Fix the issue and run again.`:'Report ready. MAS will run again automatically tomorrow when you open the app.';
+  running=false;$('#run').disabled=false;
+}
+function maybeAuto(force){
+  if(!S.key||!S.projects.length||running)return;
+  if(force||(localStorage.getItem('mas_last')!==today()&&Date.now()-(+localStorage.getItem('mas_try')||0)>30*60*1000))runAll();
+}
+$('#run').onclick=()=>{if(!S.key)return openCfg();if(!S.projects.length)return show('projects');runAll()};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)maybeAuto()});
+
+function meters(sc,pv){return CATS.filter(c=>sc?.[c]!=null).map(c=>{const v=sc[c],d=pv?.[c]!=null?v-pv[c]:0;return`<div class="m"><span>${c}</span><em>${v}${d?`<small class="${d>0?'up':'dn'}">${d>0?'+':''}${d}</small>`:''}</em><i>${Array.from({length:10},(_,i)=>`<b class="${i<Math.round(v/10)?'on':''}"></b>`).join('')}</i></div>`}).join('')}
+function renderReports(){
+  const ds=Object.keys(S.reports).sort().reverse();cur=cur&&S.reports[cur]?cur:ds[0];
+  $('#dates').innerHTML=ds.map(d=>`<option ${d===cur?'selected':''}>${d}</option>`).join('');$('#dates').style.display=ds.length?'':'none';
+  const cards=cur?S.projects.map(p=>{const r=S.reports[cur][p.id];if(!r)return'';const pv=prevRep(p.id,cur);
+    return`<article class="rep"><aside><h2>${esc(host(p.url))}</h2><small>${esc(cur)}</small>${r.err?'':meters(r.scores,pv?.scores)}</aside><div class="body md">${r.err?`<p class="err">${esc(r.err)}</p>`:md(r.md)}</div></article>`}).join(''):'';
+  $('#rep').innerHTML=cards||`<div class="empty"><h2>${S.projects.length?'No report yet':'Start with one URL'}</h2>${!S.key?'Add your OpenRouter key in Settings, then ':''}${S.projects.length?'run the first analysis.':'add a project under Projects. Reports build up here day by day.'}</div>`;
+}
+$('#dates').onchange=e=>{cur=e.target.value;renderReports()};
+
+// ---------- ideas chat ----------
+const CHIPS=['Marketing ideas for this week','Features I should add right now','Write a cold-call script for local businesses','How do I upsell my existing clients?','What should I fix first across my projects?'];
+function context(){
+  const d=Object.keys(S.reports).sort().reverse()[0];
+  const rs=d?S.projects.map(p=>S.reports[d][p.id]&&!S.reports[d][p.id].err?`- ${p.url} (${d}) scores ${JSON.stringify(S.reports[d][p.id].scores)}\n${S.reports[d][p.id].md.slice(0,1200)}`:`- ${p.url}: no report yet`).join('\n'):'No reports yet.';
+  return`You are MAS, the strategy brain of WebHut, a web development agency in Kerala, India that builds and ships client websites fast (about 48 hours). The owner is a young founder who wants sharp, practical, professional advice: marketing ideas, lead generation, pricing and upsells, and features worth adding to client sites. Keep answers concrete, prioritized and short enough to act on. Do not write full websites or code; the owner builds those elsewhere.\n\nTheir projects and latest reports:\n${rs}`;
+}
+function renderChat(){
+  $('#chat').innerHTML=S.chat.map(m=>`<div class="msg ${m.role==='user'?'u':'a md'}">${m.role==='user'?esc(m.content):md(m.content)}</div>`).join('');
+  $('#chips').style.display=S.chat.length?'none':'flex';
+}
+async function ask(text){
+  if(!text.trim())return;if(!S.key)return openCfg();
+  S.chat.push({role:'user',content:text});renderChat();$('#q').value='';
+  const b=$('#send');b.disabled=true;b.textContent='…';scrollTo2();
+  try{const r=await llm([{role:'system',content:context()},...S.chat.slice(-12)]);S.chat.push({role:'assistant',content:r})}
+  catch(e){S.chat.push({role:'assistant',content:'**Error:** '+e.message})}
+  S.chat=S.chat.slice(-30);save('mas_chat',S.chat);renderChat();b.disabled=false;b.textContent='Send';scrollTo2();
+}
+const scrollTo2=()=>{const m=$('main');m.scrollTop=m.scrollHeight};
+$('#chips').innerHTML=CHIPS.map(c=>`<button>${esc(c)}</button>`).join('');
+$$('#chips button').forEach(b=>b.onclick=()=>ask(b.textContent));
+$('#send').onclick=()=>ask($('#q').value);
+$('#q').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask($('#q').value)}};
+$('#clr').onclick=()=>{S.chat=[];save('mas_chat',S.chat);renderChat()};
+
+// ---------- boot ----------
+if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+renderProjects();renderReports();renderChat();
+if(!S.key)setTimeout(openCfg,400);else maybeAuto();
+</script>
+</body>
+</html>
