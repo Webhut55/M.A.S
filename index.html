@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 <style>
-:root{--ink:#0b2016;--forest:#123b22;--leaf:#1a7a20;--lime:#7fd38a;--paper:#f2f5f0;--line:#dbe4d9;--mute:#5d7565;--warn:#b0621a;--bad:#a63a2b}
+:root{--ink:#0b2016;--forest:#123b22;--leaf:#00841f;--leafd:#006b19;--lime:#7fd38a;--paper:#f2f5f0;--line:#dbe4d9;--mute:#5d7565;--warn:#b0621a;--bad:#a63a2b}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{font:15px/1.6 'Instrument Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);display:flex}
@@ -26,11 +26,13 @@ nav{width:236px;flex:none;background:var(--ink);color:#b9d1bf;display:flex;flex-
 .brand svg{width:36px;height:36px}
 .brand b{display:block;color:#fff;font:800 20px 'Bricolage Grotesque';letter-spacing:-.02em;line-height:1.1}
 .brand span{font-size:12px;color:#7da38a}
-nav button.t{display:flex;align-items:center;gap:11px;background:none;border:0;color:inherit;padding:10px 12px;border-radius:10px;text-align:left;font-weight:500}
+nav button.t{display:flex;align-items:center;gap:11px;background:none;border:0;color:inherit;padding:10px 12px;border-radius:10px;text-align:left;font-weight:500;position:relative}
 nav button.t:hover{background:#ffffff0d}
 nav button.t.on{background:var(--forest);color:#fff;box-shadow:inset 3px 0 0 var(--lime)}
 nav svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 nav .sp{flex:1}
+.bdg{margin-left:auto;background:var(--lime);color:var(--ink);font:700 11px 'Instrument Sans';border-radius:99px;padding:1px 7px}
+.bdg:empty{display:none}
 main{flex:1;min-width:0;overflow:auto;padding:34px clamp(18px,4vw,52px) 60px}
 .view{display:none;max-width:980px;margin:0 auto}
 .view.on{display:block}
@@ -38,17 +40,29 @@ main{flex:1;min-width:0;overflow:auto;padding:34px clamp(18px,4vw,52px) 60px}
 .head h1{font-size:clamp(28px,4vw,42px);line-height:1.05;font-weight:800}
 .head p{color:var(--mute);margin-top:6px}
 .btn{background:var(--leaf);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:600;transition:background .15s}
-.btn:hover{background:#146018}
+.btn:hover{background:var(--leafd)}
 .btn:disabled{opacity:.55;cursor:wait}
 .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
 .btn.ghost:hover{background:#eaf1e8}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn.bad{color:var(--bad)}
 select,input[type=text],input[type=password],textarea{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 select.sm{width:auto;padding:9px 12px}
 #st{font-size:13px;color:var(--mute);margin-bottom:18px;min-height:20px}
+.band{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:22px}
+.band>div{padding:16px 20px;border-left:1px solid var(--line)}
+.band>div:first-child{border:0}
+.band em{font:800 34px/1.1 'Bricolage Grotesque';font-style:normal;display:block;letter-spacing:-.03em}
+.band em small{font:600 13px 'Instrument Sans';margin-left:6px;letter-spacing:0}
+.band span{font-size:12.5px;color:var(--mute)}
+.band .up{color:var(--leaf)}.band .dn{color:var(--bad)}
 .rep{display:grid;grid-template-columns:250px 1fr;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:22px}
 .rep aside{background:var(--forest);color:#d4e6d8;padding:24px 22px}
 .rep aside h2{color:#fff;font-size:20px;font-weight:700;word-break:break-all;line-height:1.2}
-.rep aside small{display:block;color:#86ad92;margin:4px 0 22px;font-size:12px}
+.rep aside>small{display:block;color:#86ad92;margin:4px 0 16px;font-size:12px}
+.big{font:800 54px/1 'Bricolage Grotesque';color:#fff;letter-spacing:-.04em;margin-bottom:4px}
+.big small{font:600 14px 'Instrument Sans';margin-left:6px;letter-spacing:0}
+.lbl{font-size:12px;color:#86ad92;margin-bottom:18px}
 .m{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin-bottom:13px;font-size:13px}
 .m span{text-transform:capitalize}
 .m em{font:700 15px 'Bricolage Grotesque';font-style:normal;color:#fff;text-align:right}
@@ -57,9 +71,12 @@ select.sm{width:auto;padding:9px 12px}
 .m i{grid-column:1/3;display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
 .m b{height:6px;border-radius:2px;background:#ffffff1c}
 .m b.on{background:var(--lime)}
+.spark{margin-top:20px;font-size:12px;color:#86ad92}
+.spark svg{display:block;width:100%;height:44px;margin-top:6px}
 .body{padding:26px 30px;min-width:0}
+.acts{display:flex;gap:8px;justify-content:flex-end;margin:-8px 0 10px}
 .md h2{font-size:19px;margin:22px 0 8px;font-weight:700}
-.md h2:first-child{margin-top:0}
+.md h2:first-child,.acts+h2{margin-top:0}
 .md h3{font-size:16px;margin:16px 0 6px}
 .md p{margin:8px 0}
 .md ul,.md ol{margin:8px 0 8px 22px}
@@ -75,35 +92,56 @@ select.sm{width:auto;padding:9px 12px}
 .empty{border:1px dashed #b8c9b9;border-radius:18px;padding:44px 24px;text-align:center;color:var(--mute)}
 .empty h2{color:var(--ink);font-size:22px;margin-bottom:6px}
 .add{display:flex;gap:10px;margin-bottom:20px}
-.pr{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px}
-.pr div{flex:1;min-width:0}
+.pr{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px}
+.pr>div{flex:1;min-width:0}
 .pr b{display:block;font:700 17px 'Bricolage Grotesque'}
 .pr span{font-size:13px;color:var(--mute);word-break:break-all}
-.pr button{background:none;border:0;color:var(--bad);font-weight:500;padding:6px 8px}
+.pr input{margin-top:8px;font-size:13px;padding:7px 10px}
+.pr .sc{flex:none;font:800 22px 'Bricolage Grotesque';color:var(--leaf);min-width:34px;text-align:right}
+.prog{height:8px;border-radius:99px;background:#dfe9dd;overflow:hidden;margin:0 0 22px}
+.prog i{display:block;height:100%;background:var(--leaf);transition:width .3s}
+.tg{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.tg h3{font-size:15px;padding:12px 18px;background:#eaf1e8;border-bottom:1px solid var(--line)}
+.tk{display:flex;gap:12px;align-items:flex-start;padding:11px 18px;border-bottom:1px solid var(--line);cursor:pointer}
+.tk:last-child{border:0}
+.tk input{width:18px;height:18px;margin-top:3px;accent-color:var(--leaf);flex:none}
+.tk.done span{text-decoration:line-through;color:var(--mute)}
 #chat{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
-.msg{max-width:86%;padding:12px 16px;border-radius:16px}
+.msg{max-width:86%;padding:12px 16px;border-radius:16px;position:relative}
 .msg.u{align-self:flex-end;background:var(--forest);color:#fff;border-bottom-right-radius:4px;white-space:pre-wrap}
 .msg.a{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+.cp{display:block;margin:8px 0 -4px auto;background:none;border:0;font-size:12px;color:var(--mute)}
+.cp:hover{color:var(--leaf)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .chips button{background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:500}
 .chips button:hover{border-color:var(--leaf);color:var(--leaf)}
 .compose{display:flex;gap:10px;align-items:flex-end;position:sticky;bottom:0;background:var(--paper);padding-top:8px}
 .compose textarea{resize:none;max-height:150px}
-dialog{border:0;border-radius:18px;padding:26px;width:min(440px,92vw);margin:auto;box-shadow:0 24px 70px #0b201655}
+dialog{border:0;border-radius:18px;padding:26px;width:min(460px,92vw);margin:auto;box-shadow:0 24px 70px #0b201655}
 dialog::backdrop{background:#0b2016aa}
 dialog label{display:block;font-weight:600;margin:14px 0 6px}
 dialog p.h{font-size:13px;color:var(--mute);margin-top:6px}
-.row{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+dialog hr{border:0;border-top:1px solid var(--line);margin:20px 0 4px}
+.row{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
+.row.l{justify-content:flex-start;margin-top:10px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:.2s;z-index:9}
+#toast.on{opacity:1;transform:translateX(-50%)}
 @media(max-width:820px){
 body{flex-direction:column-reverse}
 nav{width:100%;flex-direction:row;padding:6px 8px calc(6px + env(safe-area-inset-bottom));gap:2px;justify-content:space-around}
 .brand,nav .sp{display:none}
 nav button.t{flex-direction:column;gap:2px;font-size:11px;padding:7px 10px}
 nav button.t.on{box-shadow:none}
+.bdg{position:absolute;top:2px;right:2px;margin:0;padding:0 5px}
 main{padding-top:calc(24px + env(safe-area-inset-top))}
+.band{grid-template-columns:1fr 1fr}
+.band>div:nth-child(odd){border-left:0}
+.band>div:nth-child(n+3){border-top:1px solid var(--line)}
 .rep{grid-template-columns:1fr}
 .body{padding:20px}
 .msg{max-width:94%}
+.pr{flex-wrap:wrap}
+#toast{bottom:90px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -111,7 +149,8 @@ main{padding-top:calc(24px + env(safe-area-inset-top))}
 <body>
 <nav>
   <div class="brand"><svg viewBox="0 0 512 512"><rect width="512" height="512" rx="110" fill="#123b22"/><path d="M120 380V160L256 280L392 160V380" fill="none" stroke="#fff" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/><circle cx="120" cy="160" r="28" fill="#7fd38a"/><circle cx="256" cy="280" r="28" fill="#7fd38a"/><circle cx="392" cy="160" r="28" fill="#7fd38a"/></svg><div><b>MAS</b><span>WebHut Multi-Agent System</span></div></div>
-  <button class="t on" data-v="reports"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Reports</button>
+  <button class="t on" data-v="reports"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Briefing</button>
+  <button class="t" data-v="tasks"><svg class="i" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tasks<span class="bdg" id="tb"></span></button>
   <button class="t" data-v="projects"><svg class="i" viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>Projects</button>
   <button class="t" data-v="ideas"><svg class="i" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>Ideas</button>
   <div class="sp"></div>
@@ -125,7 +164,13 @@ main{padding-top:calc(24px + env(safe-area-inset-top))}
       <div style="display:flex;gap:10px"><select class="sm" id="dates" aria-label="Report date"></select><button class="btn" id="run">Run analysis now</button></div>
     </div>
     <div id="st"></div>
+    <div id="band"></div>
     <div id="rep"></div>
+  </section>
+
+  <section class="view" id="v-tasks">
+    <div class="head"><div><h1>Tasks</h1><p>Quick wins from the last 7 days of reports. Tick them off as you ship.</p></div></div>
+    <div id="tasks"></div>
   </section>
 
   <section class="view" id="v-projects">
@@ -135,7 +180,8 @@ main{padding-top:calc(24px + env(safe-area-inset-top))}
   </section>
 
   <section class="view" id="v-ideas">
-    <div class="head"><div><h1>Ideas</h1><p>Marketing, growth and features, grounded in your latest reports.</p></div><button class="btn ghost" id="clr">Clear chat</button></div>
+    <div class="head"><div><h1>Ideas</h1><p>Marketing, growth and features, grounded in your latest reports.</p></div>
+      <div style="display:flex;gap:10px"><select class="sm" id="scope" aria-label="Project focus"></select><button class="btn ghost" id="clr">Clear chat</button></div></div>
     <div class="chips" id="chips"></div>
     <div id="chat"></div>
     <div class="compose"><textarea id="q" rows="1" placeholder="Ask for marketing ideas, cold-call angles, features to add…"></textarea><button class="btn" id="send">Send</button></div>
@@ -153,85 +199,149 @@ main{padding-top:calc(24px + env(safe-area-inset-top))}
     <option value="meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (free)</option>
     <option value="google/gemma-3-12b-it:free">Gemma 3 12B (free)</option>
     <option value="openai/gpt-oss-20b:free">GPT-OSS 20B (free)</option>
+    <option value="custom">Custom model ID…</option>
   </select>
+  <input type="text" id="cm" placeholder="provider/model-name" style="margin-top:8px;display:none" aria-label="Custom model ID">
+  <hr>
+  <label>Your data</label>
+  <div class="row l"><button class="btn ghost sm" id="exp">Export backup</button><button class="btn ghost sm" id="imp">Import backup</button><button class="btn ghost sm bad" id="wipe">Delete all data</button></div>
+  <input type="file" id="file" accept=".json,application/json" hidden>
+  <p class="h">Backups include projects, reports, tasks and chat, never your API key.</p>
   <div class="row"><button class="btn ghost" id="cx">Cancel</button><button class="btn" id="sv">Save</button></div>
 </dialog>
+<div id="toast" role="status"></div>
 
 <script>
 const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
-const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{toast('Storage is full. Export a backup and delete old data.')}};
 const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const S={key:LS('mas_key',''),model:LS('mas_model','openrouter/free'),projects:LS('mas_projects',[]),reports:LS('mas_reports',{}),chat:LS('mas_chat',[])};
+const S={key:LS('mas_key',''),model:LS('mas_model','openrouter/free'),projects:LS('mas_projects',[]),reports:LS('mas_reports',{}),chat:LS('mas_chat',[]),tasks:LS('mas_tasks',{}),scope:'all'};
 const today=()=>new Date().toLocaleDateString('en-CA');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const CATS=['design','seo','content','conversion','trust'];
 let cur=null,running=false;
-// Raw HTML in model output is escaped, never rendered.
-marked.use({renderer:{html:h=>esc(typeof h==='string'?h:h.text)}});
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
+// Raw HTML in model output is escaped, never rendered. Only http(s) links are kept.
+marked.use({renderer:{html:h=>esc(typeof h==='string'?h:h.text),link(href,title,text){return /^https?:/i.test(href)?`<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${text}</a>`:text}}});
 const md=t=>marked.parse(t||'');
+const copy=async t=>{try{await navigator.clipboard.writeText(t);toast('Copied')}catch{toast('Copy failed')}};
+function download(name,text,type='text/markdown'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+
+// ---------- scores ----------
+const avg=sc=>{const v=CATS.map(c=>sc?.[c]).filter(x=>x!=null);return v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):null};
+const dates=()=>Object.keys(S.reports).sort();
+const hist=pid=>dates().map(d=>({d,s:avg(S.reports[d][pid]?.scores)})).filter(x=>x.s!=null);
+const delta=d=>d?`<small class="${d>0?'up':'dn'}">${d>0?'+':''}${d}</small>`:'';
+function spark(h){
+  h=h.slice(-14);if(h.length<2)return'<div class="spark">Trend appears after two reports.</div>';
+  const v=h.map(x=>x.s),lo=Math.min(...v)-4,hi=Math.max(...v)+4,W=200,H=44;
+  const pts=v.map((s,i)=>[i*W/(v.length-1),H-(s-lo)/(hi-lo)*H]);
+  const [x,y]=pts.at(-1);
+  return`<div class="spark">Overall, last ${h.length} reports<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')}" fill="none" stroke="#7fd38a" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/><circle cx="${x}" cy="${y}" r="3.5" fill="#fff"/></svg></div>`;
+}
 
 // ---------- navigation ----------
-function show(v){$$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));$$('nav .t[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===v));if(v==='ideas')$('#q').focus({preventScroll:true})}
+function show(v){$$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));$$('nav .t[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===v));if(v==='ideas')$('#q').focus({preventScroll:true});if(v==='tasks')renderTasks()}
 $$('nav .t[data-v]').forEach(b=>b.onclick=()=>show(b.dataset.v));
 const dlg=$('#dlg');
-function openCfg(){$('#key').value=S.key;$('#mdl').value=S.model;dlg.showModal()}
+const BUILTIN=[...$('#mdl').options].map(o=>o.value);
+function openCfg(){$('#key').value=S.key;const b=BUILTIN.includes(S.model);$('#mdl').value=b?S.model:'custom';$('#cm').value=b?'':S.model;$('#cm').style.display=b?'none':'';dlg.showModal()}
+$('#mdl').onchange=e=>{$('#cm').style.display=e.target.value==='custom'?'':'none'};
 $('#cfg').onclick=openCfg;$('#cx').onclick=()=>dlg.close();
-$('#sv').onclick=()=>{S.key=$('#key').value.trim();S.model=$('#mdl').value;save('mas_key',S.key);save('mas_model',S.model);dlg.close();maybeAuto()};
+$('#sv').onclick=()=>{S.key=$('#key').value.trim();const m=$('#mdl').value;S.model=m==='custom'?($('#cm').value.trim()||'openrouter/free'):m;save('mas_key',S.key);save('mas_model',S.model);dlg.close();toast('Settings saved');maybeAuto()};
+$('#exp').onclick=()=>download('mas-backup-'+today()+'.json',JSON.stringify({projects:S.projects,reports:S.reports,chat:S.chat,tasks:S.tasks,model:S.model}),'application/json');
+$('#imp').onclick=()=>$('#file').click();
+$('#file').onchange=async e=>{
+  try{const j=JSON.parse(await e.target.files[0].text());
+    if(!Array.isArray(j.projects)||typeof j.reports!=='object')throw 0;
+    Object.assign(S,{projects:j.projects,reports:j.reports,chat:j.chat||[],tasks:j.tasks||{}});
+    save('mas_projects',S.projects);save('mas_reports',S.reports);save('mas_chat',S.chat);save('mas_tasks',S.tasks);renderAll();dlg.close();toast('Backup restored')}
+  catch{toast('That file is not a MAS backup')}e.target.value=''};
+$('#wipe').onclick=()=>{if(!confirm('Delete all projects, reports, tasks and chat from this browser?'))return;
+  ['mas_projects','mas_reports','mas_chat','mas_tasks','mas_last','mas_try'].forEach(k=>localStorage.removeItem(k));
+  Object.assign(S,{projects:[],reports:{},chat:[],tasks:{}});cur=null;renderAll();dlg.close();toast('All data deleted')};
 
 // ---------- API ----------
-async function llm(messages){
-  const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+S.key,'Content-Type':'application/json','HTTP-Referer':location.href,'X-Title':'WebHut MAS'},body:JSON.stringify({model:S.model,messages})});
-  const j=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error(j.error?.message||'AI request failed ('+r.status+')');
-  const t=j.choices?.[0]?.message?.content;
-  if(!t)throw new Error('The model returned an empty answer. Try again or switch model.');
-  return t;
+async function llm(messages,onTok){
+  for(let n=0;;n++){
+    const ac=new AbortController(),to=setTimeout(()=>ac.abort(),120000);
+    try{
+      const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',signal:ac.signal,headers:{'Authorization':'Bearer '+S.key,'Content-Type':'application/json','HTTP-Referer':location.href,'X-Title':'WebHut MAS'},body:JSON.stringify({model:S.model,messages,stream:!!onTok})});
+      if(!r.ok){const j=await r.json().catch(()=>({}));
+        if((r.status===429||r.status>=500)&&n<2){await sleep(2500*(n+1));continue}
+        throw new Error(r.status===401?'The API key was rejected. Check it in Settings.':j.error?.message||'AI request failed ('+r.status+')')}
+      if(!onTok){const t=(await r.json()).choices?.[0]?.message?.content;if(!t)throw new Error('The model returned an empty answer. Try again or switch model.');return t}
+      const rd=r.body.getReader(),dec=new TextDecoder();let buf='',txt='';
+      for(;;){const{done,value}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});const ls=buf.split('\n');buf=ls.pop();
+        for(const l of ls){if(!l.startsWith('data:'))continue;const p=l.slice(5).trim();if(p==='[DONE]')continue;
+          try{const d=JSON.parse(p).choices?.[0]?.delta?.content;if(d){txt+=d;onTok(txt)}}catch{}}}
+      if(!txt)throw new Error('The model returned an empty answer. Try again or switch model.');
+      return txt;
+    }catch(e){throw e.name==='AbortError'?new Error('The model took too long. Try again or switch model.'):e}
+    finally{clearTimeout(to)}
+  }
 }
 async function readSite(url){
-  const r=await fetch('https://r.jina.ai/'+url,{headers:{Accept:'text/plain'}});
-  if(!r.ok)throw new Error('Could not read '+url+' ('+r.status+')');
-  return (await r.text()).slice(0,12000);
+  for(let n=0;n<2;n++){
+    try{const r=await fetch('https://r.jina.ai/'+url,{headers:{Accept:'text/plain'},signal:AbortSignal.timeout(45000)});
+      if(!r.ok)throw new Error('Could not read '+url+' ('+r.status+')');
+      const t=(await r.text()).slice(0,12000);
+      if(t.trim().length<150)throw new Error('The page returned almost no readable text. It may be blocked or fully script-rendered.');
+      return t}
+    catch(e){if(n||/almost no/.test(e.message))throw e;await sleep(1500)}
+  }
 }
 
 // ---------- projects ----------
 const host=u=>new URL(u).hostname.replace(/^www\./,'');
+const latest=pid=>{for(const d of dates().reverse())if(S.reports[d][pid]?.scores)return S.reports[d][pid]};
 function renderProjects(){
-  $('#plist').innerHTML=S.projects.length?S.projects.map(p=>`<div class="pr"><div><b>${esc(host(p.url))}</b><span>${esc(p.url)}</span></div><button data-id="${p.id}">Remove</button></div>`).join(''):'<div class="empty"><h2>No projects yet</h2>Paste a URL above. You only do this once.</div>';
-  $$('#plist button').forEach(b=>b.onclick=()=>{S.projects=S.projects.filter(p=>p.id!==b.dataset.id);save('mas_projects',S.projects);renderProjects();renderReports()});
+  $('#plist').innerHTML=S.projects.length?S.projects.map(p=>{const l=latest(p.id),s=avg(l?.scores);
+    return`<div class="pr"><div><b>${esc(host(p.url))}</b><span>${esc(p.url)}</span><input type="text" class="nt" data-id="${p.id}" value="${esc(p.note||'')}" placeholder="What does this business sell, and to whom? (optional, sharpens the audit)" aria-label="Business context"></div>${s!=null?`<div class="sc" style="flex:none">${s}</div>`:''}<button class="btn ghost sm" data-run="${p.id}">Analyze</button><button class="btn ghost sm bad" data-rm="${p.id}">Remove</button></div>`}).join(''):'<div class="empty"><h2>No projects yet</h2>Paste a URL above. You only do this once.</div>';
+  const o=$('#scope'),v=S.scope;o.innerHTML='<option value="all">All projects</option>'+S.projects.map(p=>`<option value="${p.id}">${esc(host(p.url))}</option>`).join('');
+  o.value=S.projects.some(p=>p.id===v)?v:'all';S.scope=o.value;
 }
+$('#plist').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.rm){S.projects=S.projects.filter(p=>p.id!==b.dataset.rm);save('mas_projects',S.projects);renderAll()}
+  if(b.dataset.run){if(!S.key)return openCfg();runProjects(S.projects.filter(p=>p.id===b.dataset.run))}};
+$('#plist').onchange=e=>{if(!e.target.classList.contains('nt'))return;const p=S.projects.find(p=>p.id===e.target.dataset.id);if(p){p.note=e.target.value.trim().slice(0,300);save('mas_projects',S.projects);toast('Context saved')}};
 function addProject(){
   let u=$('#url').value.trim();if(!u)return;
   if(!/^https?:\/\//i.test(u))u='https://'+u;
-  try{new URL(u)}catch{return alert('That does not look like a valid URL.')}
-  if(S.projects.some(p=>p.url===u))return;
+  try{new URL(u)}catch{return toast('That does not look like a valid URL.')}
+  if(S.projects.some(p=>p.url===u))return toast('Already added');
   S.projects.push({id:Date.now().toString(36),url:u,added:today()});save('mas_projects',S.projects);
-  $('#url').value='';renderProjects();renderReports();maybeAuto(true);
+  $('#url').value='';renderAll();maybeAuto(true);
 }
 $('#addBtn').onclick=addProject;$('#url').onkeydown=e=>{if(e.key==='Enter')addProject()};
 
 // ---------- analysis ----------
-const prevRep=(pid,date)=>{for(const d of Object.keys(S.reports).sort().reverse())if(d<date&&S.reports[d][pid]?.md)return S.reports[d][pid]};
+const prevRep=(pid,date)=>{for(const d of dates().reverse())if(d<date&&S.reports[d][pid]?.md)return S.reports[d][pid]};
 async function analyze(p,date){
   const page=await readSite(p.url),prev=prevRep(p.id,date);
-  const sys='You are MAS, the senior web strategist of WebHut, a small web development agency in India. You audit live websites for the agency owner. Be specific, honest and practical; quote real elements from the page. You only see the page text, so never claim to measure load speed.';
-  const usr=`Audit this website: ${p.url}\n\nPAGE CONTENT:\n${page}\n\n${prev?`YESTERDAY'S REPORT (for comparison, mention what changed):\n${prev.md.slice(0,1500)}\n\n`:''}Reply in exactly this format.\nLine 1: SCORES: design=NN, seo=NN, content=NN, conversion=NN, trust=NN (each 0-100)\nThen markdown with these ## sections:\n## Summary (2-3 sentences${prev?', include what changed since the last report':''})\n## What is working\n## Problems to fix (ordered by priority, each with the exact fix)\n## Do today (3 quick wins, under 1 hour each)\n## Marketing ideas (3 concrete ideas for this business, with a sample hook or headline)\n## Features to add now (3 features that would raise conversions)`;
+  const sys='You are MAS, the senior web strategist of WebHut, a small web development agency in India. You audit live websites for the agency owner. Be specific, honest and practical; quote real elements from the page. Use Indian context and prices in ₹ where relevant. You only see the page text, so never claim to measure load speed.';
+  const usr=`Audit this website: ${p.url}\n\n${p.note?`BUSINESS CONTEXT FROM THE OWNER: ${p.note}\n\n`:''}PAGE CONTENT:\n${page}\n\n${prev?`YESTERDAY'S REPORT (for comparison, mention what changed):\n${prev.md.slice(0,1500)}\n\n`:''}Reply in exactly this format.\nLine 1: SCORES: design=NN, seo=NN, content=NN, conversion=NN, trust=NN (each 0-100, be strict, most sites score 40-75)\nThen markdown with these ## sections:\n## Summary (2-3 sentences${prev?', include what changed since the last report':''})\n## What is working\n## Problems to fix (ordered by priority, each with the exact fix)\n## Do today (exactly 3 quick wins as a bullet list, each under 1 hour)\n## Marketing ideas (3 concrete ideas for this business, with a sample hook or headline)\n## Features to add now (3 features that would raise conversions)\n## Upsell opportunity (one paid add-on to offer this client, with a suggested price in ₹)`;
   const out=await llm([{role:'system',content:sys},{role:'user',content:usr}]);
   const scores={};for(const m of out.matchAll(/\b(design|seo|content|conversion|trust)\s*[=:]\s*(\d{1,3})/gi))if(!(m[1].toLowerCase() in scores))scores[m[1].toLowerCase()]=Math.min(100,+m[2]);
   return{md:out.replace(/^.*SCORES:.*$/im,'').trim(),scores,at:Date.now()};
 }
-async function runAll(){
-  if(running||!S.key||!S.projects.length)return;
-  running=true;$('#run').disabled=true;const date=today();S.reports[date]=S.reports[date]||{};let bad=0;
+function busy(b){running=b;$('#run').disabled=b;$$('[data-run]').forEach(x=>x.disabled=b)}
+async function runProjects(list){
+  if(running||!S.key||!list.length)return;
+  busy(true);const date=today();S.reports[date]=S.reports[date]||{};let bad=0;
   localStorage.setItem('mas_try',Date.now());
-  for(const [i,p] of S.projects.entries()){
-    $('#st').textContent=`Analyzing ${host(p.url)} (${i+1} of ${S.projects.length})…`;
+  for(const [i,p] of list.entries()){
+    $('#st').textContent=`Analyzing ${host(p.url)} (${i+1} of ${list.length})…`;
     try{S.reports[date][p.id]=await analyze(p,date)}catch(e){bad++;S.reports[date][p.id]={err:e.message,at:Date.now()}}
-    save('mas_reports',S.reports);cur=date;renderReports();
+    cur=date;save('mas_reports',S.reports);renderAll();
   }
-  if(!bad)localStorage.setItem('mas_last',date);
+  dates().slice(0,-60).forEach(d=>delete S.reports[d]);save('mas_reports',S.reports);
+  if(!bad&&list.length===S.projects.length)localStorage.setItem('mas_last',date);
   $('#st').textContent=bad?`Finished with ${bad} problem${bad>1?'s':''}. Fix the issue and run again.`:'Report ready. MAS will run again automatically tomorrow when you open the app.';
-  running=false;$('#run').disabled=false;
+  busy(false);
 }
+const runAll=()=>runProjects(S.projects);
 function maybeAuto(force){
   if(!S.key||!S.projects.length||running)return;
   if(force||(localStorage.getItem('mas_last')!==today()&&Date.now()-(+localStorage.getItem('mas_try')||0)>30*60*1000))runAll();
@@ -239,45 +349,84 @@ function maybeAuto(force){
 $('#run').onclick=()=>{if(!S.key)return openCfg();if(!S.projects.length)return show('projects');runAll()};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)maybeAuto()});
 
-function meters(sc,pv){return CATS.filter(c=>sc?.[c]!=null).map(c=>{const v=sc[c],d=pv?.[c]!=null?v-pv[c]:0;return`<div class="m"><span>${c}</span><em>${v}${d?`<small class="${d>0?'up':'dn'}">${d>0?'+':''}${d}</small>`:''}</em><i>${Array.from({length:10},(_,i)=>`<b class="${i<Math.round(v/10)?'on':''}"></b>`).join('')}</i></div>`}).join('')}
+// ---------- briefing ----------
+function meters(sc,pv){return CATS.filter(c=>sc?.[c]!=null).map(c=>{const v=sc[c],d=pv?.[c]!=null?v-pv[c]:0;return`<div class="m"><span>${c}</span><em>${v}${delta(d)}</em><i>${Array.from({length:10},(_,i)=>`<b class="${i<Math.round(v/10)?'on':''}"></b>`).join('')}</i></div>`}).join('')}
+function renderBand(){
+  const ok=cur?S.projects.filter(p=>S.reports[cur][p.id]?.scores):[];
+  if(!ok.length){$('#band').innerHTML='';return}
+  const now=ok.map(p=>avg(S.reports[cur][p.id].scores)),pv=ok.map(p=>avg(prevRep(p.id,cur)?.scores)).filter(x=>x!=null);
+  const a=Math.round(now.reduce((x,y)=>x+y)/now.length),d=pv.length?a-Math.round(pv.reduce((x,y)=>x+y)/pv.length):0;
+  const w=CATS.map(c=>[c,ok.reduce((s,p)=>s+(S.reports[cur][p.id].scores[c]??0),0)/ok.length]).sort((x,y)=>x[1]-y[1])[0][0];
+  const open=collectTasks().filter(t=>!S.tasks[t.id]?.done).length;
+  $('#band').innerHTML=`<div class="band"><div><em>${a}${delta(d)}</em><span>Portfolio score</span></div><div><em style="text-transform:capitalize">${w}</em><span>Weakest area overall</span></div><div><em>${open}</em><span>Open quick wins</span></div><div><em>${ok.length}</em><span>Project${ok.length>1?'s':''} analyzed</span></div></div>`;
+}
 function renderReports(){
-  const ds=Object.keys(S.reports).sort().reverse();cur=cur&&S.reports[cur]?cur:ds[0];
+  const ds=dates().reverse();cur=cur&&S.reports[cur]?cur:ds[0];
   $('#dates').innerHTML=ds.map(d=>`<option ${d===cur?'selected':''}>${d}</option>`).join('');$('#dates').style.display=ds.length?'':'none';
-  const cards=cur?S.projects.map(p=>{const r=S.reports[cur][p.id];if(!r)return'';const pv=prevRep(p.id,cur);
-    return`<article class="rep"><aside><h2>${esc(host(p.url))}</h2><small>${esc(cur)}</small>${r.err?'':meters(r.scores,pv?.scores)}</aside><div class="body md">${r.err?`<p class="err">${esc(r.err)}</p>`:md(r.md)}</div></article>`}).join(''):'';
+  renderBand();
+  const cards=cur?S.projects.map(p=>{const r=S.reports[cur][p.id];if(!r)return'';const pv=prevRep(p.id,cur),o=avg(r.scores),po=avg(pv?.scores);
+    return`<article class="rep"><aside><h2>${esc(host(p.url))}</h2><small>${esc(cur)}</small>${r.err?'':`<div class="big">${o??'–'}${o!=null&&po!=null?delta(o-po):''}</div><div class="lbl">Overall score</div>${meters(r.scores,pv?.scores)}${spark(hist(p.id))}`}</aside><div class="body md">${r.err?`<p class="err">${esc(r.err)}</p>`:`<div class="acts"><button class="btn ghost sm" data-cp="${p.id}">Copy</button><button class="btn ghost sm" data-dl="${p.id}">Download</button></div>`}${r.err?'':md(r.md)}</div></article>`}).join(''):'';
   $('#rep').innerHTML=cards||`<div class="empty"><h2>${S.projects.length?'No report yet':'Start with one URL'}</h2>${!S.key?'Add your OpenRouter key in Settings, then ':''}${S.projects.length?'run the first analysis.':'add a project under Projects. Reports build up here day by day.'}</div>`;
 }
+$('#rep').onclick=e=>{const b=e.target.closest('button');if(!b)return;const id=b.dataset.cp||b.dataset.dl,p=S.projects.find(p=>p.id===id),r=S.reports[cur]?.[id];if(!p||!r)return;
+  const txt=`# ${host(p.url)} — ${cur}\n\nScores: ${JSON.stringify(r.scores)}\n\n${r.md}`;
+  b.dataset.cp?copy(txt):download(`mas-${host(p.url)}-${cur}.md`,txt)};
 $('#dates').onchange=e=>{cur=e.target.value;renderReports()};
 
+// ---------- tasks ----------
+const hash=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return(h>>>0).toString(36)};
+function collectTasks(){
+  const out=[],seen=new Set();
+  for(const d of dates().reverse().slice(0,7))for(const p of S.projects){
+    const m=(S.reports[d][p.id]?.md||'').match(/^##\s*Do today[^\n]*\n([\s\S]*?)(?=^##\s|(?![\s\S]))/im);if(!m)continue;
+    for(const x of m[1].matchAll(/^\s*(?:[-*•]|\d+[.)])\s+(.+)$/gm)){
+      const t=x[1].replace(/[*_`]/g,'').trim(),id=hash(p.id+t);if(!t||seen.has(id))continue;seen.add(id);out.push({id,pid:p.id,t,d})}}
+  return out;
+}
+function renderTasks(){
+  const all=collectTasks(),done=all.filter(t=>S.tasks[t.id]?.done).length,open=all.length-done;
+  $('#tb').textContent=open||'';
+  if(!all.length){$('#tasks').innerHTML='<div class="empty"><h2>No tasks yet</h2>Each report ends with three quick wins. They collect here after your first analysis.</div>';return}
+  $('#tasks').innerHTML=`<div class="prog" aria-label="${done} of ${all.length} done"><i style="width:${done/all.length*100}%"></i></div>`+
+    S.projects.map(p=>{const ts=all.filter(t=>t.pid===p.id).sort((a,b)=>!!S.tasks[a.id]?.done-!!S.tasks[b.id]?.done);
+      return ts.length?`<div class="tg"><h3>${esc(host(p.url))}</h3>${ts.map(t=>`<label class="tk ${S.tasks[t.id]?.done?'done':''}"><input type="checkbox" data-t="${t.id}" ${S.tasks[t.id]?.done?'checked':''}><span>${esc(t.t)}</span></label>`).join('')}</div>`:''}).join('');
+}
+$('#tasks').onchange=e=>{const id=e.target.dataset.t;if(!id)return;S.tasks[id]={done:e.target.checked,at:Date.now()};save('mas_tasks',S.tasks);renderTasks();renderBand()};
+
 // ---------- ideas chat ----------
-const CHIPS=['Marketing ideas for this week','Features I should add right now','Write a cold-call script for local businesses','How do I upsell my existing clients?','What should I fix first across my projects?'];
+const CHIPS=['Weekly growth plan across all my projects','Marketing ideas for this week','Features I should add right now','Write a cold-call script for local businesses','Draft a WhatsApp pitch for a new local client','How do I upsell my existing clients?','What should I fix first across my projects?'];
 function context(){
-  const d=Object.keys(S.reports).sort().reverse()[0];
-  const rs=d?S.projects.map(p=>S.reports[d][p.id]&&!S.reports[d][p.id].err?`- ${p.url} (${d}) scores ${JSON.stringify(S.reports[d][p.id].scores)}\n${S.reports[d][p.id].md.slice(0,1200)}`:`- ${p.url}: no report yet`).join('\n'):'No reports yet.';
-  return`You are MAS, the strategy brain of WebHut, a web development agency in Kerala, India that builds and ships client websites fast (about 48 hours). The owner is a young founder who wants sharp, practical, professional advice: marketing ideas, lead generation, pricing and upsells, and features worth adding to client sites. Keep answers concrete, prioritized and short enough to act on. Do not write full websites or code; the owner builds those elsewhere.\n\nTheir projects and latest reports:\n${rs}`;
+  const list=S.scope==='all'?S.projects:S.projects.filter(p=>p.id===S.scope);
+  const rs=list.map(p=>{const l=latest(p.id);return l?`- ${p.url}${p.note?` (${p.note})`:''}, scores ${JSON.stringify(l.scores)}\n${l.md.slice(0,1200)}`:`- ${p.url}: no report yet`}).join('\n')||'No projects yet.';
+  return`You are MAS, the strategy brain of WebHut, a web development agency in Kerala, India that builds and ships client websites fast (about 48 hours). The owner is a young founder who wants sharp, practical, professional advice: marketing ideas, lead generation, pricing and upsells, and features worth adding to client sites. Keep answers concrete, prioritized and short enough to act on. Do not write full websites or code; the owner builds those elsewhere.\n\nFocus: ${S.scope==='all'?'all projects':'one project'}. Latest reports:\n${rs}`;
 }
 function renderChat(){
-  $('#chat').innerHTML=S.chat.map(m=>`<div class="msg ${m.role==='user'?'u':'a md'}">${m.role==='user'?esc(m.content):md(m.content)}</div>`).join('');
+  $('#chat').innerHTML=S.chat.map((m,i)=>`<div class="msg ${m.role==='user'?'u':'a md'}">${m.role==='user'?esc(m.content):md(m.content)+`<button class="cp" data-i="${i}">Copy</button>`}</div>`).join('');
   $('#chips').style.display=S.chat.length?'none':'flex';
 }
 async function ask(text){
   if(!text.trim())return;if(!S.key)return openCfg();
-  S.chat.push({role:'user',content:text});renderChat();$('#q').value='';
-  const b=$('#send');b.disabled=true;b.textContent='…';scrollTo2();
-  try{const r=await llm([{role:'system',content:context()},...S.chat.slice(-12)]);S.chat.push({role:'assistant',content:r})}
-  catch(e){S.chat.push({role:'assistant',content:'**Error:** '+e.message})}
-  S.chat=S.chat.slice(-30);save('mas_chat',S.chat);renderChat();b.disabled=false;b.textContent='Send';scrollTo2();
+  S.chat.push({role:'user',content:text});$('#q').value='';
+  const a={role:'assistant',content:''};S.chat.push(a);renderChat();
+  const el=$('#chat').lastElementChild;el.textContent='Thinking…';
+  const b=$('#send');b.disabled=true;scrollTo2();
+  try{a.content=await llm([{role:'system',content:context()},...S.chat.slice(-13,-1)],t=>{el.innerHTML=md(t);scrollTo2()})}
+  catch(e){a.content='**Error:** '+e.message}
+  S.chat=S.chat.slice(-30);save('mas_chat',S.chat);renderChat();b.disabled=false;scrollTo2();
 }
 const scrollTo2=()=>{const m=$('main');m.scrollTop=m.scrollHeight};
 $('#chips').innerHTML=CHIPS.map(c=>`<button>${esc(c)}</button>`).join('');
 $$('#chips button').forEach(b=>b.onclick=()=>ask(b.textContent));
+$('#chat').onclick=e=>{const b=e.target.closest('.cp');if(b)copy(S.chat[b.dataset.i].content)};
+$('#scope').onchange=e=>{S.scope=e.target.value};
 $('#send').onclick=()=>ask($('#q').value);
 $('#q').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask($('#q').value)}};
 $('#clr').onclick=()=>{S.chat=[];save('mas_chat',S.chat);renderChat()};
 
 // ---------- boot ----------
+function renderAll(){renderProjects();renderReports();renderTasks();renderChat()}
 if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
-renderProjects();renderReports();renderChat();
+renderAll();
 if(!S.key)setTimeout(openCfg,400);else maybeAuto();
 </script>
 </body>
